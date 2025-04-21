@@ -72,7 +72,7 @@ function Home() {
       </div>
       
       {/* Blue Divider */}
-      <div class="w-full h-12 bg-blue-500 my-4"></div>
+      <div style={{ backgroundColor: '#3276A6E5' }} class="w-full h-20 my-4"></div>
       
       {/* Charity Cards Grid */}
       <div class="container mx-auto px-4 mb-8">

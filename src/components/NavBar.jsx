@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav class="bg-blue-500 shadow-md">
+    <nav style={{ backgroundColor: '#3276A6E5' }} class="shadow-md">
       <div class="h-16 md:h-20 container mx-auto flex items-center justify-between px-4">
         <div class="flex items-center">
           <img 
