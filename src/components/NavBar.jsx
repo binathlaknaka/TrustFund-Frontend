@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
+import LogoImage from '../assets/logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,21 +10,11 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <div className="bg-white rounded-full p-1 w-16 h-16 flex items-center justify-center">
-            <div className="flex flex-col items-center">
-              <div className="relative">
-                <div className="w-8 h-8 border-2 border-black rounded-full"></div>
-                <div className="absolute bottom-0 right-0 w-4 h-4 flex items-center justify-center">
-                  <span className="text-xs font-bold">✓</span>
-                </div>
-              </div>
-              <div className="text-black text-xs font-bold mt-1">Trust</div>
-            </div>
-          </div>
+          <img src={LogoImage} alt="TrustFund Logo" class="h-15"/>
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8 text-white font-medium">
+        <div className="hidden md:flex space-x-8 text-black font-medium">
           <a href="#" className="hover:text-gray-200">Home</a>
           <a href="#" className="hover:text-gray-200">Category</a>
           <a href="#" className="hover:text-gray-200">Gallery</a>
