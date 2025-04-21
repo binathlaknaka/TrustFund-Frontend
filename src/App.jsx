@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
+import Footer from './components/Footer';
 
 function Layout() {
   return (
@@ -9,6 +10,9 @@ function Layout() {
       <main>
         <Outlet />
       </main>
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }
