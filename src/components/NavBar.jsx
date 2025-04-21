@@ -7,18 +7,16 @@ const Navbar = () => {
 
   return (
     <nav className="bg-blue-500 shadow-md">
-      {/* Fixed height container */}
       <div className="h-16 md:h-20 container mx-auto flex items-center justify-between px-4">
-        {/* Logo - now using h-fit */}
         <div className="flex items-center">
           <img 
             src={LogoImage} 
             alt="TrustFund Logo" 
-            className="h-fit max-h-12 md:max-h-16" // Adjusted for responsive sizing
+            className="h-fit max-h-12 md:max-h-16"
           />
         </div>
 
-        {/* Rest of your navbar content remains the same */}
+        
         <div className="hidden md:flex space-x-8 text-black font-medium">
           <a href="#" className="hover:text-gray-200">Home</a>
           <a href="#" className="hover:text-gray-200">Category</a>
@@ -43,7 +41,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu (now positioned absolutely below the fixed navbar) */}
       {isMenuOpen && (
         <div className="md:hidden bg-blue-500 pt-2 pb-4 absolute w-full z-10">
           <div className="flex flex-col space-y-3 px-4 text-white">
