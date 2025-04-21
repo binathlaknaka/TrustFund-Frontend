@@ -6,14 +6,19 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-500 p-4 shadow-md">
-      <div className="container mx-auto flex items-center justify-between">
-        {/* Logo */}
+    <nav className="bg-blue-500 shadow-md">
+      {/* Fixed height container */}
+      <div className="h-16 md:h-20 container mx-auto flex items-center justify-between px-4">
+        {/* Logo - now using h-fit */}
         <div className="flex items-center">
-          <img src={LogoImage} alt="TrustFund Logo" class="h-15"/>
+          <img 
+            src={LogoImage} 
+            alt="TrustFund Logo" 
+            className="h-fit max-h-12 md:max-h-16" // Adjusted for responsive sizing
+          />
         </div>
 
-        {/* Desktop Menu */}
+        {/* Rest of your navbar content remains the same */}
         <div className="hidden md:flex space-x-8 text-black font-medium">
           <a href="#" className="hover:text-gray-200">Home</a>
           <a href="#" className="hover:text-gray-200">Category</a>
@@ -22,14 +27,12 @@ const Navbar = () => {
           <a href="#" className="hover:text-gray-200">Feedback</a>
         </div>
 
-        {/* Create Account Button */}
         <div className="hidden md:block">
           <button className="bg-white text-black font-medium py-2 px-6 rounded-full hover:bg-gray-100">
             create account
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -40,9 +43,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu (now positioned absolutely below the fixed navbar) */}
       {isMenuOpen && (
-        <div className="md:hidden bg-blue-500 pt-2 pb-4">
+        <div className="md:hidden bg-blue-500 pt-2 pb-4 absolute w-full z-10">
           <div className="flex flex-col space-y-3 px-4 text-white">
             <a href="#" className="py-2 hover:bg-blue-600 px-2 rounded">Home</a>
             <a href="#" className="py-2 hover:bg-blue-600 px-2 rounded">Category</a>
