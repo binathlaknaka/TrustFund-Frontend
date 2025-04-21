@@ -10,7 +10,7 @@ function Layout() {
       <main>
         <Outlet />
       </main>
-      <div className="mt-auto">
+      <div class="mt-auto">
         <Footer />
       </div>
     </div>

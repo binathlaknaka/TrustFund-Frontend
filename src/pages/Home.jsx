@@ -51,18 +51,20 @@ function Home() {
   };
 
   return (
-    <div id="top" className="flex flex-col min-h-screen">
+    <div id="top" class="flex flex-col min-h-screen">
       {/* Hero Banner Section */}
-      <div className="relative mx-4 my-4 rounded-lg overflow-hidden">
-      <img src={homeTemp} alt="Charity volunteers" className="w-full h-64 object-cover"/>
+      <div class="relative mx-4 my-4 rounded-lg overflow-hidden">
+      <div class="flex place-content-center overflow-hidden relative">
+        <img src={homeTemp} alt="Charity volunteers"/>
+      </div>
         
         {/* Dots for carousel */}
-        <div className="flex justify-center mt-2">
+        <div class="flex justify-center mt-2">
           {[0, 1, 2, 3].map((dot, index) => (
             <button 
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`h-2 w-2 mx-1 rounded-full ${currentSlide === index ? 'bg-black' : 'bg-gray-300'}`}
+              class={`h-2 w-2 mx-1 rounded-full ${currentSlide === index ? 'bg-black' : 'bg-gray-300'}`}
               aria-label={`Slide ${index + 1}`}
             />
           ))}
@@ -70,11 +72,11 @@ function Home() {
       </div>
       
       {/* Blue Divider */}
-      <div className="w-full h-12 bg-blue-500 my-4"></div>
+      <div class="w-full h-12 bg-blue-500 my-4"></div>
       
       {/* Charity Cards Grid */}
-      <div className="container mx-auto px-4 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="container mx-auto px-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {charities.map((charity) => (
             <CharityCard 
               key={charity.id}
