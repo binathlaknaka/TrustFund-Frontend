@@ -1,21 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import sampleImage from "../assets/galleryImage.png";
-
-// ProjectCard Component
-const ProjectCard = ({ image, alt }) => {
-  return (
-    <div className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
-      <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        <img 
-          src={image} 
-          alt={alt} 
-          className="w-full h-48 object-cover"
-        />
-      </div>
-    </div>
-  );
-};
+import ProjectCard from '../components/ProjectCard';
 
 const GalleryPage = () => {
   // State for projects with infinite scrolling
@@ -40,35 +26,8 @@ const GalleryPage = () => {
   const trustFundSliderRef = useRef(null);
   const orgSliderRef = useRef(null);
   
-  // Function to handle scrolling
-  const scroll = (sliderRef, direction) => {
-    if (sliderRef.current) {
-      const container = sliderRef.current;
-      const cardWidth = container.querySelector('div').offsetWidth;
-      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-      
-      // Current scroll position
-      const currentScroll = container.scrollLeft;
-      // Target scroll position
-      const targetScroll = currentScroll + scrollAmount;
-      
-      container.scrollTo({ left: targetScroll, behavior: 'smooth' });
-      
-      // Implement infinite scrolling
-      if (direction === 'right' && 
-          container.scrollLeft + container.clientWidth >= container.scrollWidth - cardWidth) {
-        // If we're near the end, add more items
-        if (sliderRef === trustFundSliderRef) {
-          addMoreTrustFundProjects();
-        } else {
-          addMoreOrganizationsProjects();
-        }
-      }
-    }
-  };
-  
   // Function to add more TrustFund projects
-  const addMoreTrustFundProjects = () => {
+  const addMoreTrustFundProjects = useCallback(() => {
     const lastId = trustFundProjects[trustFundProjects.length - 1].id;
     const newProjects = Array(4).fill().map((_, index) => ({
       id: lastId + index + 1,
@@ -77,10 +36,10 @@ const GalleryPage = () => {
     }));
     
     setTrustFundProjects(prev => [...prev, ...newProjects]);
-  };
+  }, [trustFundProjects]);
   
   // Function to add more Organizations projects
-  const addMoreOrganizationsProjects = () => {
+  const addMoreOrganizationsProjects = useCallback(() => {
     const lastId = organizationsProjects[organizationsProjects.length - 1].id;
     const newProjects = Array(4).fill().map((_, index) => ({
       id: lastId + index + 1,
@@ -89,7 +48,21 @@ const GalleryPage = () => {
     }));
     
     setOrganizationsProjects(prev => [...prev, ...newProjects]);
-  };
+  }, [organizationsProjects]);
+
+  // Function to handle scrolling
+  const scroll = useCallback((sliderRef, direction) => {
+    if (sliderRef.current) {
+      const container = sliderRef.current;
+      const card = container.querySelector('.project-card');
+      if (!card) return;
+      
+      const cardWidth = card.offsetWidth;
+      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
+      
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }, []);
   
   // Check if we need to add scroll detection
   useEffect(() => {
@@ -97,8 +70,8 @@ const GalleryPage = () => {
       if (!ref.current) return;
       
       const container = ref.current;
-      // If we're close to the end (within 100px)
-      if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 100) {
+      // If we're close to the end (within 2 card widths)
+      if (container.scrollLeft + container.clientWidth >= container.scrollWidth - (container.clientWidth * 0.5)) {
         addMoreFn();
       }
     };
@@ -106,24 +79,27 @@ const GalleryPage = () => {
     const trustFundContainer = trustFundSliderRef.current;
     const orgContainer = orgSliderRef.current;
     
+    const trustFundHandler = () => handleScroll(trustFundSliderRef, addMoreTrustFundProjects);
+    const orgHandler = () => handleScroll(orgSliderRef, addMoreOrganizationsProjects);
+    
     if (trustFundContainer) {
-      trustFundContainer.addEventListener('scroll', () => handleScroll(trustFundSliderRef, addMoreTrustFundProjects));
+      trustFundContainer.addEventListener('scroll', trustFundHandler);
     }
     
     if (orgContainer) {
-      orgContainer.addEventListener('scroll', () => handleScroll(orgSliderRef, addMoreOrganizationsProjects));
+      orgContainer.addEventListener('scroll', orgHandler);
     }
     
     return () => {
       if (trustFundContainer) {
-        trustFundContainer.removeEventListener('scroll', () => handleScroll(trustFundSliderRef, addMoreTrustFundProjects));
+        trustFundContainer.removeEventListener('scroll', trustFundHandler);
       }
       
       if (orgContainer) {
-        orgContainer.removeEventListener('scroll', () => handleScroll(orgSliderRef, addMoreOrganizationsProjects));
+        orgContainer.removeEventListener('scroll', orgHandler);
       }
     };
-  }, [trustFundProjects, organizationsProjects]);
+  }, [addMoreTrustFundProjects, addMoreOrganizationsProjects]);
 
   return (
     <div className="w-full min-h-screen bg-gray-50 py-8">
@@ -147,19 +123,17 @@ const GalleryPage = () => {
             {/* Scrollable container */}
             <div 
               ref={trustFundSliderRef}
-              className="flex overflow-x-auto pb-6 pt-2 snap-x snap-mandatory hide-scrollbar"
+              className="flex overflow-x-auto pb-6 pt-2 snap-x snap-mandatory hide-scrollbar gap-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <div className="flex w-full">
-                {trustFundProjects.map(project => (
-                  <div key={project.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 snap-start px-2">
-                    <ProjectCard 
-                      image={project.image} 
-                      alt={project.alt}
-                    />
-                  </div>
-                ))}
-              </div>
+              {trustFundProjects.map(project => (
+                <ProjectCard 
+                  key={project.id}
+                  image={project.image} 
+                  alt={project.alt}
+                  className="project-card"
+                />
+              ))}
             </div>
             
             {/* Right navigation button */}
@@ -192,19 +166,17 @@ const GalleryPage = () => {
             {/* Scrollable container */}
             <div 
               ref={orgSliderRef}
-              className="flex overflow-x-auto pb-6 pt-2 snap-x snap-mandatory hide-scrollbar"
+              className="flex overflow-x-auto pb-6 pt-2 snap-x snap-mandatory hide-scrollbar gap-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <div className="flex w-full">
-                {organizationsProjects.map(project => (
-                  <div key={project.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 snap-start px-2">
-                    <ProjectCard 
-                      image={project.image} 
-                      alt={project.alt}
-                    />
-                  </div>
-                ))}
-              </div>
+              {organizationsProjects.map(project => (
+                <ProjectCard 
+                  key={project.id}
+                  image={project.image} 
+                  alt={project.alt}
+                  className="project-card"
+                />
+              ))}
             </div>
             
             {/* Right navigation button */}
