@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import GalleryView from './pages/Gallery';
 
 function Layout() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<GalleryView />} />
         </Route>
       </Routes>
     </Router>
