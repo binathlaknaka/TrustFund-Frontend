@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import GalleryView from './pages/Gallery';
 import AboutUs from './pages/About'
 import Feedback from './pages/FeedBack';
+import LeaderBoard from './pages/LeaderBoard';
 
 function Layout() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/gallery" element={<GalleryView />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/leaderboard" element={<LeaderBoard />} />
         </Route>
       </Routes>
     </Router>
