@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import GalleryView from './pages/Gallery';
 import AboutUs from './pages/About'
+import Feedback from './pages/FeedBack';
 
 function Layout() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<GalleryView />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Route>
       </Routes>
     </Router>
