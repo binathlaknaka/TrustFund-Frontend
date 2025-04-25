@@ -41,7 +41,7 @@ export default function AboutUs() {
       <div>
         <h2 className="text-xl font-bold mb-6 text-black">Contact us</h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           <a href="https://linkedin.com/in/TrustFund" className="flex items-center gap-2 text-blue-700 hover:underline">
             <img src={LinkedIn} alt="LinkedIn" className="w-6 h-6" />
             <span>in/TrustFund</span>
@@ -54,7 +54,7 @@ export default function AboutUs() {
           
           <a href="https://facebook.com/TrustFund/Home" className="flex items-center gap-2 text-blue-800 hover:underline">
             <img src={Facebook} alt="Facebook" className="w-6 h-6" />
-            <span>fb/TrustFund/Home</span>
+            <span>fb/TrustFund</span>
           </a>
           
           <a href="https://instagram.com/TrustFund" className="flex items-center gap-2 text-pink-600 hover:underline">
