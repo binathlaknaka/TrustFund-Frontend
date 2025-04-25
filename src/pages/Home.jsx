@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CharityCard from '../components/CharityCard';
 import homeTemp from '../assets/homeTemp.png';
+import Leaderboard from '../assets/Leaderboard.png';
 
 function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
   
   // Mock data for charity cards
   const charities = [
@@ -50,13 +53,28 @@ function Home() {
     setCurrentSlide(index);
   };
 
+  // Function to navigate to leaderboard page
+  const goToLeaderboard = () => {
+    navigate('/leaderboard');
+  };
+
   return (
     <div id="top" class="flex flex-col min-h-screen">
       {/* Hero Banner Section */}
       <div class="relative mx-4 my-4 rounded-lg overflow-hidden">
-      <div class="flex place-content-center overflow-hidden relative">
-        <img src={homeTemp} alt="Charity volunteers"/>
-      </div>
+        <div class="flex place-content-center overflow-hidden relative">
+          <img src={homeTemp} alt="Charity volunteers"/>
+          
+          {/* Leaderboard Button */}
+          <button 
+            onClick={goToLeaderboard}
+            className="absolute top-2 right-2 bg-white p-2 rounded shadow flex items-center justify-center"
+            style={{ backgroundColor: '#3276A6E5' }}
+            aria-label="View Leaderboard"
+          >
+            <img src={Leaderboard} alt="leaderboard stats" class="h-12"/>
+          </button>
+        </div>
         
         {/* Dots for carousel */}
         <div class="flex justify-center mt-2">
