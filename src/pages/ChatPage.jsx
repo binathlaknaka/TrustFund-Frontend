@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([
@@ -20,7 +21,6 @@ const ChatPage = () => {
     setMessages([...messages, newMsg]);
     setNewMessage('');
 
-    // Simulate a response from the organization (since backend isn't ready)
     setTimeout(() => {
       setMessages(prev => [
         ...prev,
@@ -35,6 +35,9 @@ const ChatPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 flex justify-center">
+      <Helmet>
+        <title>Chat</title>
+      </Helmet>
       <div className="w-full max-w-2xl">
         {/* Chat Header */}
         <div className="bg-[#3276A6E5] text-white rounded-t-lg p-4">

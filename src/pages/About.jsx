@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Facebook from '../assets/Facebook.png';
 import Instagram from '../assets/Instagram.png';
 import LinkedIn from '../assets/LinkedIn.png';
@@ -8,6 +9,9 @@ import AboutImage from '../assets/AboutImage.png';
 export default function AboutUs() {
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <Helmet>
+        <title>About</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center mb-8 text-black">Who we are?</h1>
       
       <div className="flex flex-col md:flex-row gap-6 mb-8">

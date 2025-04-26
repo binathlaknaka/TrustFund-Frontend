@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import CharityCard from '../components/CharityCardCategory';
 import CharityImageTemp from '../assets/charity.png';
 
@@ -63,6 +64,9 @@ const OrganizationsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Helmet>
+        <title>Category</title>
+      </Helmet>
       {/* Page Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <h1 className="text-3xl font-bold mb-4 md:mb-0 text-black">Organizations</h1>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import CharityCard from '../components/CharityCard';
 import homeTemp from '../assets/homeTemp.png';
@@ -8,7 +9,6 @@ function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
   
-  // Mock data for charity cards
   const charities = [
     {
       id: 1,
@@ -48,18 +48,19 @@ function Home() {
     }
   ];
 
-  // Function to handle slide change
   const handleDotClick = (index) => {
     setCurrentSlide(index);
   };
 
-  // Function to navigate to leaderboard page
   const goToLeaderboard = () => {
     navigate('/leaderboard');
   };
 
   return (
     <div id="top" class="flex flex-col min-h-screen">
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       {/* Hero Banner Section */}
       <div class="relative mx-4 my-4 rounded-lg overflow-hidden">
         <div class="flex place-content-center overflow-hidden relative">

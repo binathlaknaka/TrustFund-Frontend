@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDonation } from '../context/DonationContext';
 
@@ -64,6 +65,9 @@ const DonationPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Helmet>
+        <title>Donate</title>
+      </Helmet>
       {/* Header with back button */}
       <div className="flex items-center mb-6">
         <button 

@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import sampleImage from "../assets/galleryImage.png";
 import ProjectCard from '../components/ProjectCard';
 
 const GalleryPage = () => {
-  // State for projects with infinite scrolling
   const [trustFundProjects, setTrustFundProjects] = useState([
     { id: 1, image: sampleImage, alt: "TrustFund Project 1" },
     { id: 2, image: sampleImage, alt: "TrustFund Project 2" },
@@ -26,7 +26,6 @@ const GalleryPage = () => {
   const trustFundSliderRef = useRef(null);
   const orgSliderRef = useRef(null);
   
-  // Function to add more TrustFund projects
   const addMoreTrustFundProjects = useCallback(() => {
     const lastId = trustFundProjects[trustFundProjects.length - 1].id;
     const newProjects = Array(4).fill().map((_, index) => ({
@@ -38,7 +37,6 @@ const GalleryPage = () => {
     setTrustFundProjects(prev => [...prev, ...newProjects]);
   }, [trustFundProjects]);
   
-  // Function to add more Organizations projects
   const addMoreOrganizationsProjects = useCallback(() => {
     const lastId = organizationsProjects[organizationsProjects.length - 1].id;
     const newProjects = Array(4).fill().map((_, index) => ({
@@ -50,7 +48,6 @@ const GalleryPage = () => {
     setOrganizationsProjects(prev => [...prev, ...newProjects]);
   }, [organizationsProjects]);
 
-  // Function to handle scrolling
   const scroll = useCallback((sliderRef, direction) => {
     if (sliderRef.current) {
       const container = sliderRef.current;
@@ -64,13 +61,11 @@ const GalleryPage = () => {
     }
   }, []);
   
-  // Check if we need to add scroll detection
   useEffect(() => {
     const handleScroll = (ref, addMoreFn) => {
       if (!ref.current) return;
       
       const container = ref.current;
-      // If we're close to the end (within 2 card widths)
       if (container.scrollLeft + container.clientWidth >= container.scrollWidth - (container.clientWidth * 0.5)) {
         addMoreFn();
       }
@@ -103,6 +98,9 @@ const GalleryPage = () => {
 
   return (
     <div className="w-full min-h-screen bg-gray-50 py-8">
+      <Helmet>
+        <title>Gallery</title>
+      </Helmet>
       <div className="container mx-auto px-4">
         {/* TrustFund Projects Section */}
         <section className="mb-12">

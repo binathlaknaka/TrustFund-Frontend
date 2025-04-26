@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Trophy from '../assets/trophy.png';
 
@@ -21,6 +22,9 @@ export default function Leaderboard() {
   
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white text-black">
+      <Helmet>
+        <title>LeaderBoard</title>
+      </Helmet>
       {/* Header with back button */}
       <div className="flex items-center mb-8">
         <button 

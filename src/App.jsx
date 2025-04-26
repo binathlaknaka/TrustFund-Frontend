@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import { SignIn, SignUp } from './components/AuthComponents';
@@ -31,24 +32,26 @@ function Layout() {
 function App() {
   return (
     <DonationProvider>
-      <Router>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/gallery" element={<GalleryView />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/leaderboard" element={<LeaderBoard />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/category" element={<CategoryPage />} />
-            <Route path="/category/:id" element={<CharityDetail />} />
-            <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/chat" element={<ChatPage />} />
-          </Route>
-        </Routes>
-      </Router>
+      <HelmetProvider>
+        <Router>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/gallery" element={<GalleryView />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/leaderboard" element={<LeaderBoard />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/category" element={<CategoryPage />} />
+              <Route path="/category/:id" element={<CharityDetail />} />
+              <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/chat" element={<ChatPage />} />
+            </Route>
+          </Routes>
+        </Router>
+      </HelmetProvider>
     </DonationProvider>
   );
 }
