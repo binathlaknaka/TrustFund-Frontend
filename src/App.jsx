@@ -7,6 +7,7 @@ import GalleryView from './pages/Gallery';
 import AboutUs from './pages/About'
 import Feedback from './pages/FeedBack';
 import LeaderBoard from './pages/LeaderBoard';
+import CategoryPage from './pages/Category';
 
 function Layout() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/leaderboard" element={<LeaderBoard />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/category" element={<CategoryPage />} />
         </Route>
       </Routes>
     </Router>
