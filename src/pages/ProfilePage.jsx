@@ -41,6 +41,7 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     console.log("User logged out");
+    // In a real app, this would redirect to the login page or clear auth state
   };
 
   return (
@@ -49,7 +50,7 @@ const ProfilePage = () => {
       <div className="flex flex-col md:flex-row gap-6 mb-12">
         {/* Profile Picture and Total Donation */}
         <div className="w-full md:w-1/3 flex flex-col items-center">
-          <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+          <div className="w-40 h-40 rounded-full overflow-hidden mb-4"> {/* Increased size from w-32 h-32 to w-40 h-40 */}
             <img
               src={ProfileImageTemp}
               alt="Profile Picture"
@@ -208,7 +209,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="mt-12 flex justify-center">
+      <div className="mt-12 mb-12 flex justify-end"> {/* Changed from justify-center to justify-end */}
         <button
           onClick={handleLogout}
           className="px-6 py-2 bg-[#3276A6E5] text-white rounded hover:bg-[#3276A6E5]/80 transition-colors"
