@@ -284,24 +284,27 @@ const CharityDetailPage = () => {
               <p className="text-black mb-6">{org.description}</p>
               
               <div className="mb-3">
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div 
-                    className="bg-black h-2.5 rounded-full" 
-                    style={{ width: `${(org.raised / org.goal) * 100}%` }}
-                  ></div>
+                <div className="relative group">
+                  <div className="w-full bg-blue-100 rounded-full h-2.5">
+                    <div 
+                      className="bg-black h-2.5 rounded-full" 
+                      style={{ width: `${(org.raised / org.goal) * 100}%` }}
+                    ></div>
+                  </div>
+                  {/* Tooltip for raised amount on hover */}
+                  <div className="absolute left-0 top-[-30px] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span className="bg-gray-800 text-white text-xs rounded py-1 px-2">
+                      ${org.raised}
+                    </span>
+                  </div>
                 </div>
                 <div className="flex justify-between items-center mt-2">
                   <span className="text-sm text-black">
-                    ${org.raised}
+                    ${org.goal}
                   </span>
-                  <div className="flex items-center">
-                    <span className="text-sm text-black mr-2">
-                      ${org.goal}
-                    </span>
-                    <button className="bg-white border border-black text-black w-20 h-8 rounded-full hover:bg-gray-100 transition-colors text-sm">
-                      Donate
-                    </button>
-                  </div>
+                  <button className="bg-white border border-black text-black w-20 h-8 rounded-full hover:bg-gray-100 transition-colors text-sm">
+                    Donate
+                  </button>
                 </div>
               </div>
             </div>
