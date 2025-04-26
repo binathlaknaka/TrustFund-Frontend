@@ -9,7 +9,6 @@ const DonationPage = () => {
   const [donationAmount, setDonationAmount] = useState('');
   const [error, setError] = useState('');
 
-  // Find the charity and specific organization
   const charity = charities.find(c => c.id === parseInt(id));
   const organization = charity?.ongoingCharities.find(org => org.id === parseInt(orgId));
 
@@ -54,10 +53,8 @@ const DonationPage = () => {
       return;
     }
 
-    // Update the donation amount in context
     updateDonation(id, orgId, amount);
 
-    // Navigate back to the charity detail page
     navigate(`/category/${id}`);
   };
 
