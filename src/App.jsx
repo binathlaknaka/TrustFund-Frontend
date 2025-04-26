@@ -8,6 +8,7 @@ import AboutUs from './pages/About'
 import Feedback from './pages/FeedBack';
 import LeaderBoard from './pages/LeaderBoard';
 import CategoryPage from './pages/Category';
+import CharityDetail from './pages/CharityDetail';
 
 function Layout() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/category" element={<CategoryPage />} />
+          <Route path="/category/:id" element={<CharityDetail />} />
         </Route>
       </Routes>
     </Router>
