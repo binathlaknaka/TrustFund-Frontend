@@ -6,37 +6,37 @@ const defaultCharities = [
   {
     id: 1,
     name: "World Health Fund",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Supporting global healthcare initiatives and emergency medical services."
   },
   {
     id: 2,
     name: "Education For All",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Providing educational resources to underprivileged communities worldwide."
   },
   {
     id: 3,
     name: "Clean Water Project",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Bringing clean drinking water to regions facing water scarcity and pollution."
   },
   {
     id: 4,
     name: "Animal Rescue League",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Rescuing and rehabilitating endangered and abused animals across the globe."
   },
   {
     id: 5,
     name: "Hunger Relief Network",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Fighting food insecurity through community programs and food banks."
   },
   {
     id: 6,
     name: "Climate Action Now",
-    imageSrc: {CharityImageTemp},
+    imageSrc: CharityImageTemp,
     description: "Working towards sustainable solutions to combat climate change."
   }
 ];
@@ -102,23 +102,23 @@ const OrganizationsPage = () => {
 
       {/* Category Filters */}
       <div className="mb-8">
-        <div className="flex flex-wrap gap-2">
-          <button className="px-4 py-2 bg-[#3276A6E5] text-white rounded-full hover:bg-[#3276A6E5]/80">
+        <div className="flex overflow-x-auto gap-3 pb-2 md:flex-wrap md:overflow-x-visible">
+          <button className="px-4 py-2 bg-[#3276A6E5] text-white rounded-full hover:bg-[#3276A6E5]/80 flex-shrink-0">
             All
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300">
+          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300 flex-shrink-0">
             Health
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300">
+          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300 flex-shrink-0">
             Education
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300">
+          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300 flex-shrink-0">
             Environment
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300">
+          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300 flex-shrink-0">
             Animals
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300">
+          <button className="px-4 py-2 bg-gray-200 text-black rounded-full hover:bg-gray-300 flex-shrink-0">
             Humanitarian
           </button>
         </div>
@@ -150,7 +150,7 @@ const OrganizationsPage = () => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-12 flex justify-center">
+      {/* <div className="mt-12 flex justify-center">
         <nav className="flex items-center space-x-2">
           <button className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100 text-black">
             «
@@ -166,7 +166,7 @@ const OrganizationsPage = () => {
             »
           </button>
         </nav>
-      </div>
+      </div> */}
     </div>
   );
 };

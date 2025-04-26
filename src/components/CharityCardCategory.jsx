@@ -9,9 +9,12 @@ const CharityCard = ({ name, imageSrc, description, id }) => {
     >
       <div className="p-6 flex flex-col items-center">
         <img
-          src={imageSrc || "../assets/charity.png"}
+          src={imageSrc || "/assets/charity.png"} // Adjusted fallback path to match public/assets
           alt={`${name} logo`}
           className="h-32 w-32 object-contain mb-4"
+          onError={(e) => {
+            e.target.src = '/assets/charity.png'; // Fallback on error
+          }}
         />
         <h3 className="text-2xl font-bold text-center mb-2 text-black">{name || "Charity"}</h3>
         <p className="text-black text-center text-sm">
