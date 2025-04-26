@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import LogoImage from '../assets/logo.png';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activePage, setActivePage] = useState('home');
-  
   const location = useLocation();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const path = location.pathname;
@@ -17,6 +17,10 @@ const Navbar = () => {
   
   const handleNavClick = (page) => {
     setActivePage(page);
+  };
+
+  const handleSignupClick = () => {
+    navigate('/signup');
   };
 
   const isActive = (page) => activePage === page;
@@ -71,7 +75,10 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          <button className="bg-white text-black font-medium py-2 px-6 rounded-full hover:bg-gray-100">
+          <button 
+            onClick={handleSignupClick}
+            className="bg-white text-black font-medium py-2 px-6 rounded-full hover:bg-gray-100"
+          >
             create account
           </button>
         </div>
@@ -124,7 +131,10 @@ const Navbar = () => {
             >
               Feedback
             </a>
-            <button className="bg-white text-black font-medium py-2 px-6 rounded-full hover:bg-gray-100 self-start">
+            <button 
+              onClick={handleSignupClick}
+              className="bg-white text-black font-medium py-2 px-6 rounded-full hover:bg-gray-100 self-start"
+            >
               create account
             </button>
           </div>
