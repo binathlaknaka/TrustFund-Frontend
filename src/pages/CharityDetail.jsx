@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CharityImageTemp from '../assets/charity.png';
 
-
+// Sample charity data - in a real app, you would fetch this from an API
 const charities = [
   {
     id: 1,
@@ -235,7 +235,7 @@ const CharityDetailPage = () => {
       {/* Main charity info */}
       <div className="flex flex-col md:flex-row gap-6 mb-8">
         <div className="w-full md:w-1/3 flex-shrink-0">
-          <div className="bg-white rounded-lg shadow-md p-6 flex justify-center items-center">
+          <div className="bg-white rounded-lg p-6 flex justify-center items-center">
             <img 
               src={charity.imageSrc} 
               alt={`${charity.name} logo`} 
@@ -250,10 +250,10 @@ const CharityDetailPage = () => {
         <div className="w-full md:w-2/3">
           <div className="flex flex-col h-full">
             <div className="flex-grow">
-              <p className="text-black mb-4">{charity.description}</p>
+              <p className="text-black mb-6">{charity.description}</p>
             </div>
-            <div className="mt-4">
-              <button className="w-full md:w-auto bg-[#3276A6E5] text-white py-3 px-6 rounded hover:bg-[#3276A6E5]/80 transition-colors">
+            <div>
+              <button className="w-full bg-[#3276A6E5] text-white py-3 px-6 rounded hover:bg-[#3276A6E5]/80 transition-colors">
                 Contact
               </button>
             </div>
@@ -294,15 +294,16 @@ const CharityDetailPage = () => {
                   <span className="text-sm text-black">
                     ${org.raised}
                   </span>
-                  <span className="text-sm text-black">
-                    ${org.goal}
-                  </span>
+                  <div className="flex items-center">
+                    <span className="text-sm text-black mr-2">
+                      ${org.goal}
+                    </span>
+                    <button className="bg-white border border-black text-black w-20 h-8 rounded-full hover:bg-gray-100 transition-colors text-sm">
+                      Donate
+                    </button>
+                  </div>
                 </div>
               </div>
-              
-              <button className="w-full mt-4 bg-white border border-black text-black py-2 px-4 rounded hover:bg-gray-100 transition-colors">
-                Donate
-              </button>
             </div>
           ))}
         </div>
