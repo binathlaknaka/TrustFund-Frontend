@@ -1,163 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import CharityImageTemp from '../assets/charity.png';
-
-// Sample charity data - in a real app, you would fetch this from an API
-const charities = [
-  {
-    id: 1,
-    name: "World Health Fund",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 101,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 600,
-        goal: 1000
-      },
-      {
-        id: 102,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 750,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: "Education For All",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 201,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 400,
-        goal: 1000
-      },
-      {
-        id: 202,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 850,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: "Clean Water Project",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 301,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 300,
-        goal: 1000
-      },
-      {
-        id: 302,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 500,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 4,
-    name: "Animal Rescue League",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 401,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 700,
-        goal: 1000
-      },
-      {
-        id: 402,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 900,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: "Hunger Relief Network",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 501,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 350,
-        goal: 1000
-      },
-      {
-        id: 502,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 800,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: "Climate Action Now",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 601,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 450,
-        goal: 1000
-      },
-      {
-        id: 602,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 650,
-        goal: 1000
-      }
-    ]
-  }
-];
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDonation } from '../context/DonationContext';
 
 const CharityDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { charities } = useDonation();
   const [charity, setCharity] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API fetch with timeout
     const fetchCharity = () => {
       setLoading(true);
       setTimeout(() => {
@@ -168,10 +20,14 @@ const CharityDetailPage = () => {
     };
 
     fetchCharity();
-  }, [id]);
+  }, [id, charities]);
 
   const handleBack = () => {
     navigate('/category');
+  };
+
+  const handleDonate = (orgId) => {
+    navigate(`/category/${id}/donate/${orgId}`);
   };
 
   if (loading) {
@@ -302,7 +158,10 @@ const CharityDetailPage = () => {
                   <span className="text-sm text-black">
                     ${org.goal}
                   </span>
-                  <button className="bg-white border border-black text-black w-20 h-8 rounded-full hover:bg-gray-100 transition-colors text-sm">
+                  <button 
+                    onClick={() => handleDonate(org.id)}
+                    className="bg-white border border-black text-black w-20 h-8 rounded-full hover:bg-gray-100 transition-colors text-sm"
+                  >
                     Donate
                   </button>
                 </div>
