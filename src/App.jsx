@@ -11,6 +11,8 @@ import CategoryPage from './pages/Category';
 import CharityDetail from './pages/CharityDetail';
 import DonationPage from './pages/DonationPage';
 import { DonationProvider } from './context/DonationContext';
+import ProfilePage from './pages/ProfilePage';
+import ChatPage from './pages/ChatPage';
 
 function Layout() {
   return (
@@ -42,6 +44,8 @@ function App() {
             <Route path="/category" element={<CategoryPage />} />
             <Route path="/category/:id" element={<CharityDetail />} />
             <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/chat" element={<ChatPage />} />
           </Route>
         </Routes>
       </Router>
