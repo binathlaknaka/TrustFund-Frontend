@@ -21,6 +21,8 @@ import AdminDonors from './pages/admin/Donors';
 import AdminGallery from './pages/admin/Gallery';
 import AdminProfile from './pages/admin/Profile';
 
+import OrgDonations from './pages/org/Donations';
+
 function Layout() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -63,6 +65,10 @@ function App() {
               <Route path="/admin/donors" element={<AdminDonors />} />
               <Route path="/admin/gallery" element={<AdminGallery />} />
               <Route path="/admin/profile" element={<AdminProfile />} />
+
+              {/* Organization routes */}
+              <Route path="/org" element={<OrgDonations />} />
+              <Route path="/org/donations" element={<OrgDonations />} />
             </Route>
           </Routes>
         </Router>
