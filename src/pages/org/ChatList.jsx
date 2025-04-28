@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ChatList = () => {
   const navigate = useNavigate();
@@ -14,11 +15,14 @@ const ChatList = () => {
   ];
   
   const handleChatClick = (chatId) => {
-    navigate(`/org/chat/${chatId}`);
+    navigate(`/org/chats/${chatId}`);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
+        <Helmet>
+            <title>Organizations | Chat List</title>
+        </Helmet>
       {/* Chat List */}
       <div className="max-w-md mx-auto">
         {chats.map((chat) => (
