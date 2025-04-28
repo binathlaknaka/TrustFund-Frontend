@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CharityImage from '../../assets/charity.png';
+import { Helmet } from 'react-helmet-async';
 
 const OrganizationProfile = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,9 @@ const OrganizationProfile = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
+      <Helmet>
+        <title>Organization | Profile</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center text-black my-8">Organization Profile</h1>
       
       <div className="grid md:grid-cols-2 gap-8">
