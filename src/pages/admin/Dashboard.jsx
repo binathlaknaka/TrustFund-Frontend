@@ -1,9 +1,13 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import AdminDashboardImage from '../../assets/admin-dashboard.png';
 
 const AdminDashboard = () => {
   return (
     <div className="container mx-auto px-4 text-black flex justify-center items-center min-h-[calc(100vh-8rem)]">
+      <Helmet>
+        <title>Admin | Dashboard</title>
+      </Helmet>
       {/* Main Dashboard Container */}
       <div className="flex flex-col md:flex-row gap-10 w-full max-w-6xl mx-auto">
         {/* Left Section: Statistics */}
