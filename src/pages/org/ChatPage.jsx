@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 const ChatPage = () => {
   const { chatId } = useParams();
+  const navigate = useNavigate();
   const [chatData, setChatData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -17,7 +18,7 @@ const ChatPage = () => {
       
       const chatInfo = {
         id: chatId,
-        name: `Organization ${chatId}`,
+        name: `User Name`,
         messages: [
           { id: 1, sender: "user", text: "Hello! I'd like to know more about your organization." },
           { id: 2, sender: "org", text: "Hi! We're happy to help. What would you like to know?" },
@@ -57,6 +58,10 @@ const ChatPage = () => {
     }, 1000);
   };
 
+  const handleBackClick = () => {
+    navigate('/org/chats');
+  };
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8 flex justify-center items-center">
@@ -66,14 +71,37 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 flex justify-center">
+    <div className="container mx-auto px-4 py-8 flex justify-center relative">
       <Helmet>
-        <title>Chat with {chatData?.name || "Organization"}</title>
+        <title>Chat with {chatData?.name || "User"}</title>
       </Helmet>
-      <div className="w-full max-w-2xl">
+      
+      {/* Back Button */}
+      <button 
+        onClick={handleBackClick}
+        className="absolute left-4 top-12 text-gray-600 hover:text-gray-800"
+        aria-label="Back to chats"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-8 w-8" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M15 19l-7-7 7-7" 
+          />
+        </svg>
+      </button>
+      
+      <div className="w-full max-w-lg">
         {/* Chat Header */}
-        <div className="bg-[#3276A6E5] text-white rounded-t-lg p-4">
-          <h1 className="text-xl font-bold">{chatData?.name || "Organization Name"}</h1>
+        <div className="bg-[#3276A6] text-white rounded-t-lg p-4">
+          <h1 className="text-xl font-bold text-center">{chatData?.name || "User Name"}</h1>
         </div>
 
         {/* Chat Messages */}
@@ -85,7 +113,7 @@ const ChatPage = () => {
             >
               <div
                 className={`max-w-xs p-3 rounded-lg ${
-                  message.sender === 'user' ? 'bg-white' : 'bg-gray-300'
+                  message.sender === 'user' ? 'bg-white' : 'bg-white'
                 }`}
               >
                 <p className="text-black">{message.text}</p>
@@ -101,16 +129,16 @@ const ChatPage = () => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
-            className="flex-grow px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-[#3276A6E5]"
+            className="flex-grow px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-[#3276A6]"
           />
           <button
             type="submit"
-            className="ml-2 text-black hover:text-[#3276A6E5]"
+            className="ml-2 text-gray-600 hover:text-[#3276A6]"
             aria-label="Send message"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-8 w-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
