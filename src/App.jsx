@@ -26,6 +26,7 @@ import OrgChatLists from './pages/org/ChatList';
 import OrgChatPage from './pages/org/ChatPage';
 import OrgPosts from './pages/org/Post';
 import OrgCreatePosts from './pages/org/CreatePost';
+import OrgProfile from './pages/org/Profile';
 
 function Layout() {
   return (
@@ -77,6 +78,7 @@ function App() {
               <Route path="/org/chats/:chatId" element={<OrgChatPage />} />
               <Route path="/org/post" element={<OrgPosts />} />
               <Route path="/org/create-post" element={<OrgCreatePosts />} />
+              <Route path="/org/profile" element={<OrgProfile />} />
             </Route>
           </Routes>
         </Router>
