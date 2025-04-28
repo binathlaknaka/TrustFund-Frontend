@@ -18,6 +18,7 @@ import ChatPage from './pages/ChatPage';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminOrganizations from './pages/admin/Organizations';
 import AdminDonors from './pages/admin/Donors';
+import AdminGallery from './pages/admin/Gallery';
 
 function Layout() {
   return (
@@ -59,6 +60,7 @@ function App() {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/organizations" element={<AdminOrganizations />} />
               <Route path="/admin/donors" element={<AdminDonors />} />
+              <Route path="/admin/gallery" element={<AdminGallery />} />
             </Route>
           </Routes>
         </Router>
