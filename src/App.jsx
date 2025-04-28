@@ -22,6 +22,7 @@ import AdminGallery from './pages/admin/Gallery';
 import AdminProfile from './pages/admin/Profile';
 
 import OrgDonations from './pages/org/Donations';
+import OrgChatLists from './pages/org/ChatList';
 
 function Layout() {
   return (
@@ -69,6 +70,7 @@ function App() {
               {/* Organization routes */}
               <Route path="/org" element={<OrgDonations />} />
               <Route path="/org/donations" element={<OrgDonations />} />
+              <Route path="/org/chats" element={<OrgChatLists />} />
             </Route>
           </Routes>
         </Router>
