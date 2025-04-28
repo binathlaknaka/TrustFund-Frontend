@@ -15,6 +15,8 @@ import { DonationProvider } from './context/DonationContext';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
 
+import AdminDashboard from './pages/admin/Dashboard';
+
 function Layout() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,6 +38,7 @@ function App() {
         <Router>
           <Routes>
             <Route element={<Layout />}>
+              {/* Regular user routes */}
               <Route path="/" element={<Home />} />
               <Route path="/gallery" element={<GalleryView />} />
               <Route path="/about" element={<AboutUs />} />
@@ -48,6 +51,9 @@ function App() {
               <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/chat" element={<ChatPage />} />
+
+              {/* Admin routes */}
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
           </Routes>
         </Router>
