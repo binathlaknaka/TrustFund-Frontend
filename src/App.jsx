@@ -17,6 +17,7 @@ import ChatPage from './pages/ChatPage';
 
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminOrganizations from './pages/admin/Organizations';
+import AdminDonors from './pages/admin/Donors';
 
 function Layout() {
   return (
@@ -57,6 +58,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/organizations" element={<AdminOrganizations />} />
+              <Route path="/admin/donors" element={<AdminDonors />} />
             </Route>
           </Routes>
         </Router>
