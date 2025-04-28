@@ -9,7 +9,6 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Determine which navigation menu to show based on the current path
   const getNavType = () => {
     const path = location.pathname;
     if (path.startsWith('/admin')) {
@@ -24,7 +23,6 @@ const Navbar = () => {
   
   useEffect(() => {
     const path = location.pathname;
-    // Extract the current page from the path
     let currentPage;
     
     if (path === '/') {
@@ -32,19 +30,18 @@ const Navbar = () => {
     } else if (path === '/admin' || path === '/admin/') {
       currentPage = 'dashboard';
     } else if (path.startsWith('/admin/')) {
-      currentPage = path.substring(7); // Remove '/admin/'
+      currentPage = path.substring(7);
     } else if (path === '/org' || path === '/org/') {
       currentPage = 'donations';
     } else if (path.startsWith('/org/')) {
-      currentPage = path.substring(5); // Remove '/org/'
+      currentPage = path.substring(5);
     } else {
-      currentPage = path.substring(1); // Remove leading '/'
+      currentPage = path.substring(1);
     }
     
     setActivePage(currentPage);
   }, [location]);
   
-  // Get appropriate navigation links based on user type
   const getNavLinks = () => {
     switch (navType) {
       case 'admin':
@@ -85,7 +82,6 @@ const Navbar = () => {
 
   const isActive = (page) => activePage === page;
   
-  // Show account button only for regular users
   const showAccountButton = navType === 'regular';
   
   return (
