@@ -12,6 +12,7 @@ import CategoryPage from './pages/Category';
 import CharityDetail from './pages/CharityDetail';
 import DonationPage from './pages/DonationPage';
 import { DonationProvider } from './context/DonationContext';
+import { AuthProvider } from './context/AuthContext';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
 
@@ -35,55 +36,55 @@ function Layout() {
       <main className="flex-grow">
         <Outlet />
       </main>
-      <div className="mb-auto">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }
 
 function App() {
   return (
-    <DonationProvider>
-      <HelmetProvider>
-        <Router>
-          <Routes>
-            <Route element={<Layout />}>
-              {/* Regular user routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/gallery" element={<GalleryView />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/feedback" element={<Feedback />} />
-              <Route path="/leaderboard" element={<LeaderBoard />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/category" element={<CategoryPage />} />
-              <Route path="/category/:id" element={<CharityDetail />} />
-              <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/chat" element={<ChatPage />} />
+    <AuthProvider>
+      <DonationProvider>
+        <HelmetProvider>
+          <Router>
+            <Routes>
+              <Route element={<Layout />}>
+                {/* Regular user routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/gallery" element={<GalleryView />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/feedback" element={<Feedback />} />
+                <Route path="/leaderboard" element={<LeaderBoard />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/category" element={<CategoryPage />} />
+                <Route path="/category/:id" element={<CharityDetail />} />
+                <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/chat" element={<ChatPage />} />
 
-              {/* Admin routes */}
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/organizations" element={<AdminOrganizations />} />
-              <Route path="/admin/donors" element={<AdminDonors />} />
-              <Route path="/admin/gallery" element={<AdminGallery />} />
-              <Route path="/admin/profile" element={<AdminProfile />} />
+                {/* Admin routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/organizations" element={<AdminOrganizations />} />
+                <Route path="/admin/donors" element={<AdminDonors />} />
+                <Route path="/admin/gallery" element={<AdminGallery />} />
+                <Route path="/admin/profile" element={<AdminProfile />} />
 
-              {/* Organization routes */}
-              <Route path="/org" element={<OrgDonations />} />
-              <Route path="/org/donations" element={<OrgDonations />} />
-              <Route path="/org/chats" element={<OrgChatLists />} />
-              <Route path="/org/chats/:chatId" element={<OrgChatPage />} />
-              <Route path="/org/post" element={<OrgPosts />} />
-              <Route path="/org/create-post" element={<OrgCreatePosts />} />
-              <Route path="/org/profile" element={<OrgProfile />} />
-            </Route>
-          </Routes>
-        </Router>
-      </HelmetProvider>
-    </DonationProvider>
+                {/* Organization routes */}
+                <Route path="/org" element={<OrgDonations />} />
+                <Route path="/org/donations" element={<OrgDonations />} />
+                <Route path="/org/chats" element={<OrgChatLists />} />
+                <Route path="/org/chats/:chatId" element={<OrgChatPage />} />
+                <Route path="/org/post" element={<OrgPosts />} />
+                <Route path="/org/create-post" element={<OrgCreatePosts />} />
+                <Route path="/org/profile" element={<OrgProfile />} />
+              </Route>
+            </Routes>
+          </Router>
+        </HelmetProvider>
+      </DonationProvider>
+    </AuthProvider>
   );
 }
 
