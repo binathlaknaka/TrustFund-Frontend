@@ -2,20 +2,19 @@ import { useState, useContext } from 'react';
 import { Menu } from 'lucide-react';
 import LogoImage from '../assets/logo.png';
 import ProfileImage from '../assets/profile.png';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
+  // ✅ Determine nav type from user role
   const getNavType = () => {
-    const path = location.pathname;
-    if (path.startsWith('/admin')) return 'admin';
-    if (path.startsWith('/org')) return 'organization';
+    if (user?.role === 'admin') return 'admin';
+    if (user?.role === 'charity') return 'organization';
     return 'regular';
   };
 
@@ -89,7 +88,7 @@ const Navbar = () => {
                 {user.name}
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded shadow-md z-50">
+                <div className="absolute right-0 mt-2 w-32 bg-black rounded shadow-md z-50">
                   <button onClick={handleProfileClick} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-200">
                     Profile
                   </button>

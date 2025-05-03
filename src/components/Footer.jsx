@@ -21,3 +21,72 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+// import React from 'react'
+// import { FooterData } from '../assets/assets'
+// import { assets } from '../assets/assets';
+
+// const Footer = () => {
+//   return (
+//     <div>
+//         <footer >
+//             <div className='bg-blue-950'>
+//                 <div className='grid grid-cols-1 md:grid-cols-3  gap-8 mx-4 sm:mx-[10%] '>
+//                     <div className='py-7'>
+//                         <h2 className='text-lg font-bold mb-4 text-primary'>
+//                             About us
+//                         </h2>
+//                         <p className='text-gray-300 pb-5'>
+//                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, explicabo. Quidem ea necessitatibus ratione id!
+//                         </p>
+//                         <img className='w-44 cursor-pointer' src={assets.logo} alt='logo' />
+//                     </div>
+//                     <div className='px-20 py-7'>
+//                         <h2 className='text-lg font-bold mb-4 text-primary'>
+//                             Quick Links
+//                         </h2>
+//                         <ul>
+//                             <li className='py-1'>
+//                                 <a href="/" className='hover:text-gray-200 text-gray-400'>Home</a>
+//                             </li>
+//                             <li className='py-1'>
+//                                 <a href="/category" className='hover:text-gray-200 text-gray-400'>Category</a>
+//                             </li>
+//                             <li className='py-1'>
+//                                 <a href="/gallery" className='hover:text-gray-200 text-gray-400'>Gallery</a>
+//                             </li>
+//                             <li className='py-1'>
+//                                 <a href="/about" className='hover:text-gray-200 text-gray-400'>About</a>
+//                             </li>
+//                             <li className='py-1'>
+//                                 <a href="/feedback" className='hover:text-gray-200 text-gray-400'>Feedback</a>
+//                             </li>
+//                         </ul>
+//                     </div>
+//                     <div className='px-20 py-7'>
+//                         <h2 className='text-lg font-bold mb-4 text-primary'>
+//                             Follow Us
+//                         </h2>
+//                         <ul className='flex space-x-10 '>
+//                             {FooterData.map((item, index) => (
+//                                 <li key={index}>
+//                                     <a href={item.link} target="_blank" rel="noopener noreferrer">
+//                                         <item.icon className='text-gray-400 w-6 h-6 hover:text-gray-200'/>
+//                                     </a>
+//                                 </li>
+//                             ))}
+//                         </ul>
+//                     </div>
+//                 </div>
+//                 <div className='text-primary text-center py-5 border-t border-gray-400 gap-8 mx-4 sm:mx-[10%]'>
+//                     <p> ♥ TrustFund Community</p>
+//                 </div>
+//             </div>
+//         </footer>
+//     </div>
+//   );
+// };
+
+// export default Footer;

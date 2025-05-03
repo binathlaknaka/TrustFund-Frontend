@@ -1,122 +1,130 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDonation } from '../context/DonationContext';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51RKc2MPbl3KSyR3oVvvTsslNNEVbN5cwqhKnkw8GjpbJponyV5GCbvjmogYeo4M5VrwfKNZuXO4tmTTzSQ1QFNv700VKZfpoZU');
+const storedUser = JSON.parse(localStorage.getItem('user'));
 
 const DonationPage = () => {
-  const { id, orgId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { charities, updateDonation } = useDonation();
+  const [charity, setCharity] = useState(null);
   const [donationAmount, setDonationAmount] = useState('');
   const [error, setError] = useState('');
 
-  const charity = charities.find(c => c.id === parseInt(id));
-  const organization = charity?.ongoingCharities.find(org => org.id === parseInt(orgId));
+  useEffect(() => {
+    const fetchCharity = async () => {
+      const res = await fetch(`http://localhost:5000/api/posts/${id}`);
+      const data = await res.json();
+      setCharity(data);
+    };
+    fetchCharity();
+  }, [id]);
 
-  if (!charity || !organization) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center mb-6">
-          <button 
-            onClick={() => navigate(`/category/${id}`)}
-            className="text-black hover:text-[#3276A6E5] mr-4"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-2xl font-bold text-black">Organization Not Found</h1>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 text-center">
-          <p className="text-black mb-4">The organization you're looking for doesn't exist or has been removed.</p>
-          <button 
-            onClick={() => navigate(`/category/${id}`)}
-            className="px-4 py-2 bg-[#3276A6E5] text-white rounded hover:bg-[#3276A6E5]/80"
-          >
-            Return to Charity
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const handleBack = () => {
+    navigate('/');
+  };
 
-  const handleDonationSubmit = (e) => {
+  const handleDonationSubmit = async (e) => {
     e.preventDefault();
     const amount = parseFloat(donationAmount);
-
+    const remainingAmount = charity.goal - charity.raised;
+  
     if (isNaN(amount) || amount <= 0) {
       setError('Please enter a valid donation amount.');
       return;
     }
-
+  
     if (amount > 1000000) {
       setError('Donation amount cannot exceed Rs. 1,000,000.');
       return;
     }
-
-    updateDonation(id, orgId, amount);
-
-    navigate(`/category/${id}`);
+  
+    if (amount > remainingAmount) {
+      setError(`You can only donate up to Rs. ${remainingAmount} to reach the goal.`);
+      return;
+    }
+  
+    try {
+      const stripe = await stripePromise;
+      const res = await fetch('http://localhost:5000/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount,
+          programName: charity.programName,
+          postId: charity._id,
+          donorEmail: storedUser?.email || 'anonymous@example.com',
+          donorName: storedUser?.name || 'Anonymous',
+        }),
+      });
+  
+      const session = await res.json();
+  
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+  
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+    }
   };
+  
 
-  const handleBack = () => {
-    navigate(`/category/${id}`);
-  };
+  if (!charity) {
+    return <div className="text-center py-8">Loading charity info...</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Helmet>
-        <title>Donate</title>
+        <title>Donate to {charity.programName}</title>
       </Helmet>
-      {/* Header with back button */}
+
       <div className="flex items-center mb-6">
-        <button 
-          onClick={handleBack}
-          className="text-black hover:text-[#3276A6E5] mr-4"
-          aria-label="Go back to charity page"
-        >
+        <button onClick={handleBack} className="text-black hover:text-blue-600 mr-4">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
+        <h1 className="text-2xl font-bold text-black">{charity.programName}</h1>
       </div>
 
-      {/* Main donation section */}
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Logo Section */}
+        {/* Image Section */}
         <div className="w-full md:w-1/3 flex-shrink-0">
           <div className="bg-white rounded-lg p-6 flex justify-center items-center border border-gray-200">
-            <img 
-              src={organization.imageSrc} 
-              alt={`${organization.name} logo`} 
+            <img
+              src={`http://localhost:5000/uploads/${charity.image}`}
+              alt={`${charity.programName} logo`}
               className="max-w-full h-auto max-h-64"
               onError={(e) => {
                 e.target.src = '/assets/charity.png';
               }}
             />
           </div>
-          <p className="text-sm text-black text-center mt-2">
-            Lorem ipsum dolor sit amet
-          </p>
+          <p className="text-sm text-black text-center mt-2">{charity.organizationName}</p>
         </div>
 
         {/* Donation Form Section */}
         <div className="w-full md:w-2/3">
-          <h1 className="text-2xl font-bold text-black mb-4">Trust Program</h1>
-          <p className="text-black mb-6">
-            Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the Lorem ipsum is simply dummy text of the printing and typesetting industry.
-          </p>
+          <h2 className="text-xl font-bold text-black mb-4">{charity.programName}</h2>
+          <p className="text-black mb-6">{charity.programDescription}</p>
 
           {/* Progress Bar */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm text-black">Goal</span>
-              <span className="text-sm text-black">Rs. {organization.raised}/{organization.goal}</span>
+              <span className="text-sm text-black">Rs. {charity.raised || 0} / {charity.goal}</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div 
-                className="bg-[#3276A6E5] h-2.5 rounded-full" 
-                style={{ width: `${(organization.raised / organization.goal) * 100}%` }}
+              <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${(charity.raised / charity.goal) * 100}%` }}
               ></div>
             </div>
           </div>
@@ -135,23 +143,21 @@ const DonationPage = () => {
                   setDonationAmount(e.target.value);
                   setError('');
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3276A6E5] text-black"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
                 placeholder="Enter amount in Rs."
                 min="1"
                 max="1000000"
                 required
               />
-              {error && (
-                <p className="text-red-500 text-sm mt-2">{error}</p>
-              )}
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
 
             {/* Confirm Button */}
             <button
               type="submit"
-              className="w-full bg-[#3276A6E5] text-white py-3 px-6 rounded hover:bg-[#3276A6E5]/80 transition-colors"
+              className="w-full bg-blue-600 text-white py-3 px-6 rounded hover:bg-blue-700 transition-colors"
             >
-              Confirm
+              Proceed to Payment
             </button>
           </form>
         </div>

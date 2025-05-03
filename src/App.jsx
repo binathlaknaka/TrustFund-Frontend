@@ -28,6 +28,11 @@ import OrgChatPage from './pages/org/ChatPage';
 import OrgPosts from './pages/org/Post';
 import OrgCreatePosts from './pages/org/CreatePost';
 import OrgProfile from './pages/org/Profile';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import SuccessPage from './pages/SuccessPage';
+
+const stripePromise = loadStripe('pk_test_51RKc2MPbl3KSyR3oVvvTsslNNEVbN5cwqhKnkw8GjpbJponyV5GCbvjmogYeo4M5VrwfKNZuXO4tmTTzSQ1QFNv700VKZfpoZU');
 
 function Layout() {
   return (
@@ -44,6 +49,7 @@ function Layout() {
 function App() {
   return (
     <AuthProvider>
+       <Elements stripe={stripePromise}>
       <DonationProvider>
         <HelmetProvider>
           <Router>
@@ -59,9 +65,11 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/category" element={<CategoryPage />} />
                 <Route path="/category/:id" element={<CharityDetail />} />
-                <Route path="/category/:id/donate/:orgId" element={<DonationPage />} />
+                {/* <Route path="/category/:id/donate/:orgId" element={<DonationPage />} /> */}
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/chat" element={<ChatPage />} />
+                <Route path="/donate/:id" element={<DonationPage />} />
+                <Route path="/success" element={<SuccessPage />} />
 
                 {/* Admin routes */}
                 <Route path="/admin" element={<AdminDashboard />} />
@@ -84,6 +92,7 @@ function App() {
           </Router>
         </HelmetProvider>
       </DonationProvider>
+      </Elements>
     </AuthProvider>
   );
 }
