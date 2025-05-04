@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Menu } from 'lucide-react';
-import LogoImage from '../assets/logo.png';
+import LogoImage from '../assets/TrustFundLogoNew.png';
 import ProfileImage from '../assets/profile.png';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -11,10 +11,30 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
-  // ✅ Determine nav type from user role
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    // Always get the freshest user from context or localStorage
+    if (user && user.name) {
+      setCurrentUser(user);
+    } else {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser && parsedUser.name) {
+          setCurrentUser(parsedUser);
+        } else {
+          setCurrentUser(null);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    }
+  }, [user]);
+
   const getNavType = () => {
-    if (user?.role === 'admin') return 'admin';
-    if (user?.role === 'charity') return 'organization';
+    if (currentUser?.role === 'admin') return 'admin';
+    if (currentUser?.role === 'charity') return 'organization';
     return 'regular';
   };
 
@@ -67,7 +87,11 @@ const Navbar = () => {
   return (
     <nav style={{ backgroundColor: '#3276A6E5' }} className="shadow-md relative">
       <div className="h-16 md:h-20 container mx-auto flex items-center justify-between px-4">
-        <img src={LogoImage} alt="Logo" className="h-fit max-h-12 md:max-h-16" />
+        <img
+          src={LogoImage}
+          alt="Logo"
+          className="h-fit max-h-12 md:max-h-16 rounded-full object-cover border-2 border-[#3276A6]"
+        />
 
         <div className="hidden md:flex space-x-8 text-black font-medium mx-auto">
           {getNavLinks().map((link) => (
@@ -82,10 +106,10 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block relative">
-          {user ? (
+          {currentUser ? (
             <div>
               <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="text-white font-medium">
-                {user.name}
+                {currentUser.name}
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-32 bg-black rounded shadow-md z-50">

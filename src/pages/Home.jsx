@@ -44,7 +44,7 @@ function Home() {
           <button 
             onClick={goToLeaderboard}
             className="absolute top-2 right-2 bg-white p-2 rounded shadow flex items-center justify-center"
-            style={{ backgroundColor: '#3276A6E5' }}
+            style={{ backgroundColor: '#3276a6' }}
             aria-label="View Leaderboard"
           >
             <img src={Leaderboard} alt="leaderboard stats" className="h-12" />
