@@ -1,28 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const CharityCard = ({ name, imageSrc, description, id }) => {
+const CharityCardCategory = ({ id, name, description, imageSrc }) => {
+  const navigate = useNavigate();
+  const handleClick = () => navigate(`/charity/${id}`);
+
   return (
-    <Link
-      to={`/category/${id}`}
-      className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105 flex flex-col h-full cursor-pointer"
+    <div
+      onClick={handleClick}
+      className="border rounded-md p-4 bg-blue-50 cursor-pointer hover:shadow-md transition-shadow"
     >
-      <div className="p-6 flex flex-col items-center">
-        <img
-          src={imageSrc || "/assets/charity.png"}
-          alt={`${name} logo`}
-          className="h-32 w-32 object-contain mb-4"
-          onError={(e) => {
-            e.target.src = '/assets/charity.png';
-          }}
-        />
-        <h3 className="text-2xl font-bold text-center mb-2 text-black">{name || "Charity"}</h3>
-        <p className="text-black text-center text-sm">
-          {description || "Lorem Ipsum Dolor Sit Amet"}
-        </p>
-      </div>
-    </Link>
+      <img src={imageSrc} alt={name} className="w-full h-40 object-cover rounded mb-2" />
+      <h2 className="font-bold text-black">{name}</h2>
+      <p className="text-sm mb-2 text-black">{description}</p>
+    </div>
   );
 };
 
-export default CharityCard;
+export default CharityCardCategory;

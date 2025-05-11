@@ -1,181 +1,55 @@
-import React, { createContext, useState, useContext } from 'react';
-import CharityImageTemp from '../assets/charity.png';
-const initialCharities = [
-  {
-    id: 1,
-    name: "World Health Fund",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 101,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 600,
-        goal: 1000
-      },
-      {
-        id: 102,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 750,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: "Education For All",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 201,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 400,
-        goal: 1000
-      },
-      {
-        id: 202,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 850,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: "Clean Water Project",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 301,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 300,
-        goal: 1000
-      },
-      {
-        id: 302,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 500,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 4,
-    name: "Animal Rescue League",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 401,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 700,
-        goal: 1000
-      },
-      {
-        id: 402,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 900,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: "Hunger Relief Network",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 501,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 350,
-        goal: 1000
-      },
-      {
-        id: 502,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 800,
-        goal: 1000
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: "Climate Action Now",
-    imageSrc: CharityImageTemp,
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ongoingCharities: [
-      {
-        id: 601,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 450,
-        goal: 1000
-      },
-      {
-        id: 602,
-        name: "Organization Name",
-        imageSrc: CharityImageTemp,
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
-        raised: 650,
-        goal: 1000
-      }
-    ]
-  }
-];
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const DonationContext = createContext();
 
 export const DonationProvider = ({ children }) => {
-  const [charities, setCharities] = useState(initialCharities);
+  const [charities, setCharities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCharities = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/users?role=charity');
+        if (!response.ok) {
+          throw new Error('Failed to fetch charities');
+        }
+        const data = await response.json();
+
+        // OPTIONAL: Attach an empty ongoingCharities array if not present
+        const formattedData = data.map(charity => ({
+          ...charity,
+          ongoingCharities: charity.ongoingCharities || [],
+        }));
+
+        setCharities(formattedData);
+      } catch (error) {
+        console.error('Error fetching charities:', error);
+        setCharities([]);  // fallback to empty list on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCharities();
+  }, []);
 
   const updateDonation = (charityId, orgId, amount) => {
-    setCharities(prevCharities => {
-      return prevCharities.map(charity => {
-        if (charity.id === parseInt(charityId)) {
-          return {
-            ...charity,
-            ongoingCharities: charity.ongoingCharities.map(org => {
-              if (org.id === orgId) {
-                return {
-                  ...org,
-                  raised: org.raised + amount
-                };
-              }
-              return org;
-            })
-          };
-        }
-        return charity;
-      });
-    });
+    setCharities(prev =>
+      prev.map(charity =>
+        charity._id === charityId
+          ? {
+              ...charity,
+              ongoingCharities: charity.ongoingCharities.map(org =>
+                org.id === orgId ? { ...org, raised: (org.raised || 0) + amount } : org
+              ),
+            }
+          : charity
+      )
+    );
   };
 
   return (
-    <DonationContext.Provider value={{ charities, updateDonation }}>
+    <DonationContext.Provider value={{ charities, updateDonation, loading }}>
       {children}
     </DonationContext.Provider>
   );

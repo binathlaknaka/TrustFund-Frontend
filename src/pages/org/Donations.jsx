@@ -7,13 +7,22 @@ const DonationReceivePage = () => {
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/donations');
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        const organizationEmail = storedUser?.email;
+
+        if (!organizationEmail) {
+          console.error('Organization email not found in localStorage');
+          return;
+        }
+
+        const res = await fetch(`http://localhost:5000/api/donations?organizationEmail=${encodeURIComponent(organizationEmail)}`);
         const data = await res.json();
         setDonations(data);
       } catch (err) {
         console.error('Error fetching donations:', err);
       }
     };
+
     fetchDonations();
   }, []);
 
@@ -50,11 +59,8 @@ const DonationReceivePage = () => {
                   <td className="p-3 sm:p-4">{donation.donorName}</td>
                   <td className="p-3 sm:p-4">{donation.postId?.programName || '-'}</td>
                   <td className="p-3 sm:p-4">
-  {donation.createdAt
-    ? new Date(donation.createdAt).toLocaleDateString()
-    : '-'}
-</td>
-
+                    {donation.createdAt ? new Date(donation.createdAt).toLocaleDateString() : '-'}
+                  </td>
                   <td className="p-3 sm:p-4">${donation.amount}</td>
                 </tr>
               ))

@@ -1,58 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import CharityCard from '../components/CharityCardCategory';
+import CharityCardCategory from '../components/CharityCardCategory';
+import { useDonation } from '../context/DonationContext';
 
 const OrganizationsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [charities, setCharities] = useState([]);
-  const [filteredCharities, setFilteredCharities] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { charities, loading } = useDonation();
 
-  useEffect(() => {
-    const cached = localStorage.getItem('charities');
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      setCharities(parsed);
-      setFilteredCharities(parsed);
-      setLoading(false);
-      return;
-    }
-
-    const controller = new AbortController();
-
-    const fetchCharities = async () => {
-      try {
-        const res = await fetch('http://localhost:5000/api/auth/users?role=charity', {
-          signal: controller.signal,
-        });
-        const data = await res.json();
-        setCharities(data);
-        setFilteredCharities(data);
-        localStorage.setItem('charities', JSON.stringify(data));
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.error('Error fetching charities:', err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCharities();
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    if (searchTerm.trim() === '') {
-      setFilteredCharities(charities);
-    } else {
-      const filtered = charities.filter((charity) =>
-        charity.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCharities(filtered);
-    }
-  }, [searchTerm, charities]);
+  const filteredCharities = charities.filter(charity =>
+    charity.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -93,7 +50,7 @@ const OrganizationsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCharities.length > 0 ? (
           filteredCharities.map((charity) => (
-            <CharityCard
+            <CharityCardCategory
               key={charity._id}
               id={charity._id}
               name={charity.fullName || 'Unnamed Organization'}

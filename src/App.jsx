@@ -31,6 +31,9 @@ import OrgProfile from './pages/org/Profile';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import SuccessPage from './pages/SuccessPage';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminSignup from './pages/admin/AdminSignup';
+import CharityDetailPage from './pages/CharityDetail';
 
 const stripePromise = loadStripe('pk_test_51RKc2MPbl3KSyR3oVvvTsslNNEVbN5cwqhKnkw8GjpbJponyV5GCbvjmogYeo4M5VrwfKNZuXO4tmTTzSQ1QFNv700VKZfpoZU');
 
@@ -70,8 +73,11 @@ function App() {
                 <Route path="/chat" element={<ChatPage />} />
                 <Route path="/donate/:id" element={<DonationPage />} />
                 <Route path="/success" element={<SuccessPage />} />
+                <Route path="/charity/:id" element={<CharityDetailPage />} />
 
                 {/* Admin routes */}
+                <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin-signup" element={<AdminSignup />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/organizations" element={<AdminOrganizations />} />
