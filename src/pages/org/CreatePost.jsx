@@ -28,15 +28,18 @@ const CreatePostPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const organizationEmail = storedUser?.email;
-  
-    const data = new FormData();
-    data.append('programName', formData.programName);
-    data.append('goal', formData.goal);
-    data.append('programDescription', formData.programDescription);
-    data.append('image', formData.image);
-    data.append('organizationEmail', organizationEmail); 
+   const storedUser = JSON.parse(localStorage.getItem('user'));
+const organizationEmail = storedUser?.email;
+const charityId = storedUser?._id; 
+
+const data = new FormData();
+data.append('programName', formData.programName);
+data.append('goal', formData.goal);
+data.append('programDescription', formData.programDescription);
+data.append('image', formData.image);
+data.append('organizationEmail', organizationEmail);
+data.append('charityId', charityId); 
+
   
     try {
       const res = await fetch('http://localhost:5000/api/posts', {

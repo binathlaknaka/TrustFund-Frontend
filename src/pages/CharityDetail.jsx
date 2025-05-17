@@ -18,19 +18,22 @@ const CharityDetailPage = () => {
   }, [id, charities]);
 
   useEffect(() => {
-    const fetchCampaigns = async () => {
+    const fetchCampaignsByEmail = async () => {
+      if (!charity?.email) return;
+
       try {
-        const res = await fetch(`http://localhost:5000/api/posts?charityId=${id}`);
+        const res = await fetch(`http://localhost:5000/api/posts/by-email/${encodeURIComponent(charity.email)}`);
         const data = await res.json();
         setCampaigns(data);
       } catch (err) {
-        console.error('Error fetching campaigns:', err);
+        console.error('Error fetching campaigns by email:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchCampaigns();
-  }, [id]);
+
+    fetchCampaignsByEmail();
+  }, [charity]);
 
   const handleContactClick = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
