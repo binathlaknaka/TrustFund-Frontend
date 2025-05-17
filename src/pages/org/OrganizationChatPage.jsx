@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:5000'); // adjust if deployed
+const socket = io('http://localhost:5000'); // Adjust if deployed
 
-const ChatPage = () => {
+const OrganizationChatPage = () => {
   const { chatId } = useParams();
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
@@ -19,7 +19,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     socket.emit('join-chat', chatId);
-    console.log('[ChatPage] Joined room:', chatId);
+    console.log('[OrganizationChatPage] Joined room:', chatId);
 
     const fetchChatData = async () => {
       try {
@@ -41,7 +41,7 @@ const ChatPage = () => {
           setChatUser(other || { fullName: 'New Chat' });
         }
       } catch (err) {
-        console.error('[ChatPage] ERROR:', err);
+        console.error('[OrganizationChatPage] ERROR:', err);
         setError('Failed to load chat');
         setLoading(false);
       }
@@ -73,14 +73,14 @@ const ChatPage = () => {
       socket.emit('send-message', data);
       setNewMessage('');
     } catch (err) {
-      console.error('[ChatPage] ERROR sending message:', err);
+      console.error('[OrganizationChatPage] ERROR sending message:', err);
       setError('Message send failed');
     }
   };
 
   const handleBackClick = () => {
-    console.log('[ChatPage] Redirecting to chat list...');
-    navigate('/user/chats'); // adjust this path if needed
+    console.log('[OrganizationChatPage] Redirecting to chat list...');
+    navigate('/org/chats'); // ✅ Redirect to chat list
   };
 
   return (
@@ -134,4 +134,4 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
+export default OrganizationChatPage;

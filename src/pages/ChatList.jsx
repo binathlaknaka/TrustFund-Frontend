@@ -2,28 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-const ChatList = ({ userId, role }) => {
+const ChatList = () => {
   const navigate = useNavigate();
   const [chats, setChats] = useState([]);
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user?._id;
+
   useEffect(() => {
     const fetchChats = async () => {
-      const res = await fetch(`http://localhost:5000/api/chats/${userId}`);
-      const data = await res.json();
-      setChats(data);
+      try {
+        const res = await fetch(`http://localhost:5000/api/chats/my-chats/${userId}`);
+        const data = await res.json();
+        setChats(data);
+      } catch (err) {
+        console.error('Failed to load chats:', err);
+      }
     };
-    fetchChats();
+
+    if (userId) fetchChats();
   }, [userId]);
 
   const handleChatClick = (chatId) => {
-    navigate(`/${role}/chats/${chatId}`);
+    navigate(`/chat/${chatId}`);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Helmet>
-        <title>{role === 'org' ? 'Organizations' : 'Donors'} | Chat List</title>
+        <title>Donor | Chat List</title>
       </Helmet>
+
       <div className="max-w-md mx-auto">
         {chats.map((chat) => {
           const other = chat.participants.find(p => p._id !== userId);
@@ -35,12 +44,16 @@ const ChatList = ({ userId, role }) => {
             >
               <div className="flex items-center">
                 <div className="w-10 h-10 rounded-full bg-gray-400"></div>
-                <span className="ml-4 text-black">{other.fullName}</span>
+                <span className="ml-4 text-black font-medium">{other?.fullName || 'Unknown'}</span>
               </div>
-              <span className="text-black">New</span>
+              <span className="text-black text-sm">View</span>
             </div>
           );
         })}
+
+        {chats.length === 0 && (
+          <p className="text-center text-gray-600 mt-10">No conversations yet.</p>
+        )}
       </div>
     </div>
   );

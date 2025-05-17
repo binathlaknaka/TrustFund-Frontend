@@ -79,7 +79,7 @@ const Navbar = () => {
           { name: 'category', path: '/category', label: 'Category' },
           { name: 'gallery', path: '/gallery', label: 'Gallery' },
           { name: 'about', path: '/about', label: 'About' },
-          { name: 'chats', path: '/donor/chats', label: 'Chats' },
+          { name: 'chats', path: '/user/chats', label: 'Chats' },
           { name: 'feedback', path: '/feedback', label: 'Feedback' },
         ];
     }

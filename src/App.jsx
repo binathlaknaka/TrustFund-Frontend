@@ -15,6 +15,7 @@ import { DonationProvider } from './context/DonationContext';
 import { AuthProvider } from './context/AuthContext';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
+import ChatList from './pages/ChatList';
 
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminOrganizations from './pages/admin/Organizations';
@@ -23,8 +24,8 @@ import AdminGallery from './pages/admin/Gallery';
 import AdminProfile from './pages/admin/Profile';
 
 import OrgDonations from './pages/org/Donations';
-import OrgChatLists from './pages/org/ChatList';
-import OrgChatPage from './pages/org/ChatPage';
+import OrganizationChatList from './pages/org/OrganizationChatList';
+import OrganizationChatPage from './pages/org/OrganizationChatPage';
 import OrgPosts from './pages/org/Post';
 import OrgCreatePosts from './pages/org/CreatePost';
 import OrgProfile from './pages/org/Profile';
@@ -70,8 +71,8 @@ function App() {
                 <Route path="/category/:id" element={<CharityDetail />} />
                 {/* <Route path="/category/:id/donate/:orgId" element={<DonationPage />} /> */}
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/chat" element={<ChatPage />} />
-                <Route path="/donate/:id" element={<DonationPage />} />
+                <Route path="/chat/:chatId" element={<ChatPage />} /> 
+                <Route path="/user/chats" element={<ChatList />} />               <Route path="/donate/:id" element={<DonationPage />} />
                 <Route path="/success" element={<SuccessPage />} />
                 <Route path="/charity/:id" element={<CharityDetailPage />} />
 
@@ -88,8 +89,8 @@ function App() {
                 {/* Organization routes */}
                 <Route path="/org" element={<OrgDonations />} />
                 <Route path="/org/donations" element={<OrgDonations />} />
-                <Route path="/org/chats" element={<OrgChatLists />} />
-                <Route path="/org/chats/:chatId" element={<OrgChatPage />} />
+                <Route path="/org/chats" element={<OrganizationChatList />} />
+                <Route path="/org/chat/:chatId" element={<OrganizationChatPage />} />
                 <Route path="/org/post" element={<OrgPosts />} />
                 <Route path="/org/create-post" element={<OrgCreatePosts />} />
                 <Route path="/org/profile" element={<OrgProfile />} />

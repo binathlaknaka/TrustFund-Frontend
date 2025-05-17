@@ -32,6 +32,26 @@ const CharityDetailPage = () => {
     fetchCampaigns();
   }, [id]);
 
+  const handleContactClick = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user._id) {
+      alert("Please log in to start a chat.");
+      return;
+    }
+
+    const res = await fetch("http://localhost:5000/api/chats/initiate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        senderId: user._id,
+        receiverId: charity._id,
+      }),
+    });
+
+    const data = await res.json();
+    navigate(`/chat/${data.chatId}`);
+  };
+
   const handleBack = () => navigate('/organizations');
 
   if (loading) {
@@ -76,11 +96,11 @@ const CharityDetailPage = () => {
           <h1 className="text-2xl font-bold text-black">{charity.fullName}</h1>
           <p className="text-black mb-4">{charity.description}</p>
           <button
-      onClick={() => window.location.href = `mailto:${charity.email || 'info@example.com'}`}
-      className="bg-[#3276A6E5] text-white px-4 py-2 rounded hover:bg-[#3276A6E5]/80"
-    >
-      Contact
-    </button>
+            onClick={handleContactClick}
+            className="bg-[#3276A6E5] text-white px-4 py-2 rounded hover:bg-[#3276A6E5]/80"
+          >
+            Contact
+          </button>
         </div>
       </div>
 
