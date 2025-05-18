@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SignInImage from '../assets/signin.png';
-import SignUpImage from '../assets/signup.png';
+import SignInImage from '../assets/loginimage.jpg';
+import SignUpImage from '../assets/signupimage.jpg';
 import { AuthContext } from '../context/AuthContext'; // Optional, if you set it up
 
 const API_URL = 'http://localhost:5000/api/auth';
@@ -76,19 +76,24 @@ export function SignUp() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 text-black">
-      <div style={{ backgroundColor: '#3276A6E5' }} className="rounded-lg p-12 w-full max-w-6xl flex flex-col md:flex-row shadow-lg">
-        <div className="flex flex-col items-center justify-center md:w-1/3 p-6">
-          <img src={SignUpImage} alt="Signup" className="w-56 mb-6" />
-          <p className="text-center mt-2 text-lg">
-            Already have an account? <button onClick={() => navigate('/signin')} className="underline">Signin</button>
+    <div className="flex justify-center items-center min-h-screen text-black">
+      <div  className="  w-full max-w-6xl flex flex-col md:flex-row ">
+        <div className="flex flex-col items-center justify-center md:w-1/3 ">
+                           <h2 style={{ color: '#3276A6E5' }}  className="text-white text-5xl font-bold mb-6 text-center md:text-left">SignUp</h2>
+
+<img
+  src={SignUpImage}
+  alt="Signup"
+   className="w-full h-auto" 
+/>
+          <p className="text-center mt-2 text-md">
+            Already have an account? <button style={{ color: '#3276A6E5' }}  onClick={() => navigate('/signin')} className="underline">Signin</button>
           </p>
           {message && <p className="mt-4 text-center text-white">{message}</p>}
         </div>
-        <div className="md:w-2/3 md:pl-12">
-          <h2 className="text-white text-3xl font-bold mb-6 text-center md:text-right">Signup</h2>
+        <div className="md:w-2/3 pr-0 md: pr-8 pl-4">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div style={{ color: '#3276A6E5' }}  className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 { label: 'Full Name', name: 'fullName', type: 'text' },
                 { label: 'Email', name: 'email', type: 'email' },
@@ -99,20 +104,20 @@ export function SignUp() {
                 { label: 'NIC Number', name: 'nicNumber', type: 'text' }
               ].map(field => (
                 <div key={field.name}>
-                  <label className="block text-base mb-2">{field.label}</label>
+                  <label  className="block text-base mb-2 font-bold ">{field.label}</label>
                   <input
                     type={field.type}
                     name={field.name}
                     value={formData[field.name]}
                     onChange={handleChange}
-                    className="w-full p-3 rounded bg-white text-black text-base"
+                    className="w-full p-3 text-black text-base rounded-xl bg-gray-100" 
                   />
                   {errors[field.name] && <p className="text-red-500 text-sm">{errors[field.name]}</p>}
                 </div>
               ))}
               <div>
-                <label className="block text-base mb-2">Role</label>
-                <select name="role" value={formData.role} onChange={handleChange} className="w-full p-3 rounded bg-white text-black text-base">
+                <label style={{ color: '#3276A6E5' }} className="block text-base mb-2 font-bold">Role</label>
+                <select name="role" value={formData.role} onChange={handleChange} className="w-full p-3 rounded-xl bg-gray-100 text-black text-base">
                   <option value="">Select Role</option>
                   <option value="donor">Donor</option>
                   <option value="charity">Charity</option>
@@ -120,9 +125,9 @@ export function SignUp() {
                 {errors.role && <p className="text-red-500 text-sm">{errors.role}</p>}
               </div>
               <div>
-                <label className="block text-base mb-2">NIC Document</label>
+               <label style={{ color: '#3276A6E5' }} className="block text-base mb-2 font-bold">NIC Document</label>
                 <div className="flex">
-                  <input type="text" readOnly value={formData.nicDocument ? formData.nicDocument.name : ''} className="w-3/4 p-3 rounded-l text-base" />
+                  <input type="text" readOnly value={formData.nicDocument ? formData.nicDocument.name : ''} className="w-3/4 p-3 rounded-xl bg-gray-100 text-base" />
                   <label className="w-1/4 bg-gray-200 text-center p-3 rounded-r cursor-pointer">
                     Select
                     <input type="file" name="nicDocument" onChange={handleFileChange} className="hidden" />
@@ -131,7 +136,7 @@ export function SignUp() {
                 {errors.nicDocument && <p className="text-red-500 text-sm">{errors.nicDocument}</p>}
               </div>
             </div>
-            <button type="submit" className="mt-8 bg-white font-medium py-3 px-8 rounded w-full text-lg">Signup</button>
+           <button type="submit" style={{ backgroundColor: '#3276A6E5' }} className="rounded-2xl w-full text-white font-medium py-3 px-4 rounded text-lg mt-8 mb-8">Signup</button>
           </form>
         </div>
       </div>
@@ -200,14 +205,23 @@ export function SignIn() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 text-black">
-      <div style={{ backgroundColor: '#3276A6E5' }} className="rounded-lg p-12 w-full max-w-5xl flex flex-col md:flex-row shadow-lg">
-        <div className="md:w-1/2 pr-0 md:pr-8">
-          <h2 className="text-white text-3xl font-bold mb-6 text-center md:text-left">Signin</h2>
+    <div className="flex justify-center items-center min-h-screen bg-white text-black">
+      <div className="p-4 w-full max-w-6xl flex flex-col md:flex-row ">
+         <div className="md:w-1/2 flex flex-col items-center justify-center mt-8 md:mt-0">
+                   <h2 style={{ color: '#3276A6E5' }}  className="text-white text-5xl font-bold mb-6 text-center md:text-left">SignIn</h2>
+
+          <img src={SignInImage} alt="Signin" className="w-full h-auto" />
+          <div className="text-center">
+            <p  className="text-black text-md">
+              New to TrustFund? <button style={{ color: '#3276A6E5' }}  onClick={() => navigate('/signup')} className="underline">Signup</button>
+            </p>
+          </div>
+        </div>
+        <div className="md:w-1/2 pr-0 md:pl-4 pr-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-base mb-2">Role</label>
-              <select name="role" value={formData.role} onChange={handleChange} className="w-full p-3 rounded bg-white text-black text-base">
+              <label style={{ color: '#3276A6E5' }} className="block text-base mb-2 font-bold">Role</label>
+              <select name="role" value={formData.role} onChange={handleChange} className="w-full p-3 rounded-xl bg-gray-100 text-black text-base">
                 <option value="">Select Role</option>
                 <option value="donor">Donor</option>
                 <option value="charity">Charity</option>
@@ -216,27 +230,20 @@ export function SignIn() {
               {errors.role && <p className="text-red-500 text-sm">{errors.role}</p>}
             </div>
             <div>
-              <label className="block text-base mb-2">Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full p-3 rounded bg-white text-black text-base" />
+              <label style={{ color: '#3276A6E5' }} className="block text-base mb-2 font-bold">Email</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full p-3 rounded-xl bg-gray-100 text-black text-base" />
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
             <div>
-              <label className="block text-base mb-2">Password</label>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full p-3 rounded bg-white text-black text-base" />
+              <label style={{ color: '#3276A6E5' }} className="block text-base mb-2 font-bold">Password</label>
+              <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full p-3 rounded-xl bg-gray-100 text-black text-base" />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
-            <button type="submit" className="w-full bg-white text-black font-medium py-3 px-4 rounded text-lg">Signin</button>
+            <button type="submit" style={{ backgroundColor: '#3276A6E5' }} className="rounded-2xl w-full text-white font-medium py-3 px-4 rounded text-lg mt-16">SignIn</button>
           </form>
           {message && <p className="mt-4 text-center">{message}</p>}
         </div>
-        <div className="md:w-1/2 flex flex-col items-center justify-center mt-8 md:mt-0">
-          <img src={SignInImage} alt="Signin" className="w-64 h-auto" />
-          <div className="mt-6 text-center">
-            <p className="text-black text-lg">
-              No account? <button onClick={() => navigate('/signup')} className="underline">Signup</button>
-            </p>
-          </div>
-        </div>
+       
       </div>
     </div>
   );
