@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { Menu } from 'lucide-react';
-import LogoImage from '../assets/TrustFundLogoNew.png';
+import LogoImage from '../assets/TrustFundLogooo.png';
 import ProfileImage from '../assets/profile.png';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -14,7 +14,6 @@ const Navbar = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    // Always get the freshest user from context or localStorage
     if (user && user.name) {
       setCurrentUser(user);
     } else {
@@ -77,10 +76,10 @@ const Navbar = () => {
         return [
           { name: 'home', path: '/', label: 'Home' },
           { name: 'category', path: '/category', label: 'Category' },
+          { name: 'chats', path: '/user/chats', label: 'Chats' },
+          { name: 'feedback', path: '/feedback', label: 'Feedbacks' },
           { name: 'gallery', path: '/gallery', label: 'Gallery' },
           { name: 'about', path: '/about', label: 'About' },
-          { name: 'chats', path: '/user/chats', label: 'Chats' },
-          { name: 'feedback', path: '/feedback', label: 'Feedback' },
         ];
     }
   };
@@ -94,16 +93,21 @@ const Navbar = () => {
           className="h-fit max-h-12 md:max-h-16 rounded-full object-cover border-2 border-[#3276A6]"
         />
 
-        <div className="hidden md:flex space-x-8 text-black font-medium mx-auto">
-          {getNavLinks().map((link) => (
-            <a
-              key={link.name}
-              href={link.path}
-              className="hover:text-gray-200 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+        <div className="hidden md:flex space-x-8 font-medium mx-auto">
+          {getNavLinks().map((link) => {
+            const isActive = window.location.pathname === link.path;
+            return (
+              <a
+                key={link.name}
+                href={link.path}
+                className={`transition-colors hover:text-gray-200 ${
+                  isActive ? 'font-bold text-white' : 'text-black'
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
 
         <div className="hidden md:block relative">

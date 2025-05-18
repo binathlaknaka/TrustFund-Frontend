@@ -225,7 +225,7 @@ export function SignIn() {
                 <option value="">Select Role</option>
                 <option value="donor">Donor</option>
                 <option value="charity">Charity</option>
-                <option value="admin">Admin</option>
+                {/* <option value="admin">Admin</option> */}
               </select>
               {errors.role && <p className="text-red-500 text-sm">{errors.role}</p>}
             </div>
@@ -239,9 +239,17 @@ export function SignIn() {
               <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full p-3 rounded-xl bg-gray-100 text-black text-base" />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
-            <button type="submit" style={{ backgroundColor: '#3276A6E5' }} className="rounded-2xl w-full text-white font-medium py-3 px-4 rounded text-lg mt-16">SignIn</button>
+<button
+  type="submit"
+  style={{ backgroundColor: '#3276A6E5' }}
+  className="rounded-2xl w-full text-white font-medium py-3 px-4 text-lg mt-16 cursor-pointer"
+>
+  SignIn
+</button>
           </form>
-          {message && <p className="mt-4 text-center">{message}</p>}
+          <div >
+          {message && <p  style={{ color: '#3276A6E5' }}  className=" text-center">{message}</p>}
+          </div>
         </div>
        
       </div>
