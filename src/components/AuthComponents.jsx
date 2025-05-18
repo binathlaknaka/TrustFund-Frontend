@@ -175,20 +175,22 @@ export function SignIn() {
       });
       const result = await res.json();
       if (res.ok) {
-        if (login) login(result.user);
-localStorage.setItem('token', result.token);
-localStorage.setItem('user', JSON.stringify(result.user));
+  if (!result.user.approved) {
+    localStorage.setItem('user', JSON.stringify(result.user));
+    navigate('/waiting');
+    return;
+  }
 
-        setMessage('Login successful! Redirecting...');
+  login(result.user);
+  localStorage.setItem('token', result.token);
+  localStorage.setItem('user', JSON.stringify(result.user));
 
-        // ➜ Redirect based on role
-        let redirectPath = '/';
-        if (result.user.role === 'charity') redirectPath = '/org/donations';
-        if (result.user.role === 'donor') redirectPath = '/';
-        if (result.user.role === 'admin') redirectPath = '/admin/dashboard';
-
-        setTimeout(() => navigate(redirectPath), 1500);
-      } else {
+  let redirectPath = '/';
+  if (result.user.role === 'charity') redirectPath = '/org/donations';
+  if (result.user.role === 'admin') redirectPath = '/admin/dashboard';
+  setTimeout(() => navigate(redirectPath), 1500);
+}
+ else {
         setMessage(result.message || 'Login failed');
       }
     } catch (error) {

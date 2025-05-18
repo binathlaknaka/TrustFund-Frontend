@@ -35,6 +35,7 @@ import OrganizationChatPage from './pages/org/OrganizationChatPage';
 import OrgPosts from './pages/org/Post';
 import OrgCreatePosts from './pages/org/CreatePost';
 import OrgProfile from './pages/org/Profile';
+import EditPostPage from './pages/org/EditPostPage';
 
 import SuccessPage from './pages/SuccessPage';
 import { DonationProvider } from './context/DonationContext';
@@ -100,6 +101,7 @@ function App() {
                   <Route path="/org/post" element={<ProtectedRoute><OrgPosts /></ProtectedRoute>} />
                   <Route path="/org/create-post" element={<ProtectedRoute><OrgCreatePosts /></ProtectedRoute>} />
                   <Route path="/org/profile" element={<ProtectedRoute><OrgProfile /></ProtectedRoute>} />
+                  <Route path="/org/edit-post/:id" element={<EditPostPage />} />
                 </Route>
               </Routes>
             </Router>

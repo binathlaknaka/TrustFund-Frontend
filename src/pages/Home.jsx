@@ -7,10 +7,22 @@ import Leaderboard from '../assets/Leaderboard.png';
 
 function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState([]);
   const [charities, setCharities] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+   const fetchSlides = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/gallery/home-slides');
+      const data = await res.json();
+      console.log('[slides fetched]', data); // 🔍 Add this
+      setSlides(data);
+    } catch (err) {
+      console.error('[Slide fetch error]', err);
+    }
+  };
+
     const fetchPosts = async () => {
       try {
         const res = await fetch('http://localhost:5000/api/posts');
@@ -20,16 +32,18 @@ function Home() {
         console.error('Error fetching posts:', err);
       }
     };
+
+    fetchSlides();
     fetchPosts();
   }, []);
 
   // Auto-slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % (charities.length || 1));
+      setCurrentSlide(prev => (prev + 1) % (slides.length || 1));
     }, 3000);
     return () => clearInterval(interval);
-  }, [charities]);
+  }, [slides]);
 
   const handleDotClick = (index) => {
     setCurrentSlide(index);
@@ -48,16 +62,16 @@ function Home() {
       {/* Hero Carousel Section */}
       <div className="relative mx-64 my-12 rounded-lg overflow-hidden">
         <div className="flex place-content-center overflow-hidden relative h-[400px]">
-          {charities.length > 0 ? (
+          {slides.length > 0 ? (
             <img
-              src={`http://localhost:5000/uploads/${charities[currentSlide].image}`}
-              alt={charities[currentSlide].programName}
+              src={`http://localhost:5000/uploads/HomeSlide/${slides[currentSlide]}`}
+              alt={`Slide ${currentSlide + 1}`}
               className="object-cover w-full h-full"
             />
           ) : (
             <img
               src={homeTemp}
-              alt="Charity volunteers"
+              alt="Default Slide"
               className="object-cover w-full h-full"
             />
           )}
@@ -73,7 +87,7 @@ function Home() {
         </div>
 
         <div className="flex justify-center mt-2">
-          {(charities.length > 0 ? charities : [null, null, null, null]).map((_, index) => (
+          {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
@@ -86,8 +100,11 @@ function Home() {
         </div>
       </div>
 
-      {/* Blue Divider */}
-      <div style={{ backgroundColor: '#3276A6E5' }} className="w-full h-20 my-4"></div>
+{/* Blue Divider */}
+<div  className="w-full h-20 my-4 flex items-center justify-center">
+  <text style={{ color: '#3276A6E5' }} className="text-white text-4xl font-bold mb-10">Ongoing Charity Programs</text>
+</div>
+
 
       {/* Charity Cards Grid */}
       <div className="container mx-auto px-4 mb-10">

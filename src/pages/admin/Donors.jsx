@@ -1,32 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const API_URL = 'http://localhost:5000/api/users?role=donor'; // adjust backend route as needed
+const API_BASE = 'http://localhost:5000/api';
 
 const DonorsPage = () => {
-  const [donors, setDonors] = useState([]);
+  const [pendingUsers, setPendingUsers] = useState([]);
+  const [approvedUsers, setApprovedUsers] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const [pendingRes, approvedRes] = await Promise.all([
+        fetch(`${API_BASE}/users?role=donor&approved=false`),
+        fetch(`${API_BASE}/users?role=donor&approved=true`)
+      ]);
+
+      const pending = await pendingRes.json();
+      const approved = await approvedRes.json();
+
+      setPendingUsers(pending);
+      setApprovedUsers(approved);
+    } catch (error) {
+      console.error('Error fetching donors:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchDonors = async () => {
-      try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        setDonors(data);
-      } catch (error) {
-        console.error('Error fetching donors:', error);
-      }
-    };
-
-    fetchDonors();
+    fetchData();
   }, []);
+
+  const approveUser = async (id) => {
+    await fetch(`${API_BASE}/users/${id}/approve`, { method: 'PUT' });
+    fetchData();
+  };
+
+  const rejectUser = async (id) => {
+    await fetch(`${API_BASE}/users/${id}`, { method: 'DELETE' });
+    fetchData();
+  };
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
-      <Helmet>
-        <title>Admin | Donors</title>
-      </Helmet>
+      <Helmet><title>Admin | Donors</title></Helmet>
 
-      {/* New Users Section (static for now) */}
+      {/* New Donors */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-4 text-black">NEW USERS</h2>
         <div className="overflow-x-auto">
@@ -40,32 +56,35 @@ const DonorsPage = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="text-sm sm:text-base text-black">
-                <td className="p-3 sm:p-4">-</td>
-                <td className="p-3 sm:p-4">-</td>
-                <td className="p-3 sm:p-4">
-                  <button className="text-blue-600 hover:text-blue-800">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </button>
-                </td>
-                <td className="p-3 sm:p-4">
-                  <button className="text-red-600 hover:text-red-800">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </td>
-              </tr>
+              {pendingUsers.length > 0 ? pendingUsers.map((user) => (
+                <tr key={user._id} className="text-sm sm:text-base text-black">
+                  <td className="p-3 sm:p-4">{user._id}</td>
+                  <td className="p-3 sm:p-4">{user.fullName}</td>
+                  <td className="p-3 sm:p-4">
+<a
+  href={`http://localhost:5000/uploads/${user.nicDocument}`}
+  download
+  className="text-blue-600 hover:underline"
+>
+  Download
+</a>
+                  </td>
+                  <td className="p-3 sm:p-4 flex gap-2">
+                    <button onClick={() => approveUser(user._id)} className="text-green-600 hover:text-green-800">✔️</button>
+                    <button onClick={() => rejectUser(user._id)} className="text-red-600 hover:text-red-800">❌</button>
+                  </td>
+                </tr>
+              )) : (
+                <tr><td colSpan="4" className="text-center p-4 text-black">No new donors.</td></tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* All Users Section (dynamic from backend) */}
+      {/* Approved Donors */}
       <div>
-        <h2 className="text-xl font-bold mb-4 text-black">ALL USERS</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">ALL DONORS</h2>
         <div className="overflow-x-auto">
           <table className="w-full bg-gray-300 rounded-lg">
             <thead>
@@ -75,19 +94,13 @@ const DonorsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {donors.length > 0 ? (
-                donors.map((donor) => (
-                  <tr key={donor._id} className="text-sm sm:text-base text-black">
-                    <td className="p-3 sm:p-4">{donor._id}</td>
-                    <td className="p-3 sm:p-4">{donor.fullName || donor.email}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="2" className="text-center p-4 text-black">
-                    No donors found.
-                  </td>
+              {approvedUsers.length > 0 ? approvedUsers.map((user) => (
+                <tr key={user._id} className="text-sm sm:text-base text-black">
+                  <td className="p-3 sm:p-4">{user._id}</td>
+                  <td className="p-3 sm:p-4">{user.fullName || user.email}</td>
                 </tr>
+              )) : (
+                <tr><td colSpan="2" className="text-center p-4 text-black">No approved donors.</td></tr>
               )}
             </tbody>
           </table>
