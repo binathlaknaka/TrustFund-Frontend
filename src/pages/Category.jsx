@@ -31,7 +31,7 @@ const OrganizationsPage = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search organizations..."
+              placeholder="Search"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3276A6E5] text-black"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

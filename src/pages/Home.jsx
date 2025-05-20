@@ -61,7 +61,7 @@ function Home() {
 
       {/* Hero Carousel Section */}
       <div className="relative mx-64 my-12 rounded-lg overflow-hidden">
-        <div className="flex place-content-center overflow-hidden relative h-[400px]">
+        <div className="flex place-content-center overflow-hidden relative h-[400px] ">
           {slides.length > 0 ? (
             <img
               src={`http://localhost:5000/uploads/HomeSlide/${slides[currentSlide]}`}
@@ -78,7 +78,7 @@ function Home() {
 
           <button
             onClick={goToLeaderboard}
-            className="absolute top-2 right-2 bg-white p-2 rounded shadow flex items-center justify-center"
+            className="absolute top-2 right-2 bg-white p-2 rounded shadow flex items-center justify-center cursor-pointer "
             style={{ backgroundColor: '#3276a6' }}
             aria-label="View Leaderboard"
           >

@@ -146,7 +146,7 @@ const ProfilePage = () => {
             </div>
             <button
               onClick={handleEditToggle}
-              className="mt-6 px-6 py-2 bg-[#3276A6E5] text-white rounded hover:bg-[#3276A6E5]/80 transition-colors"
+              className="mt-6 px-6 py-2 bg-[#3276A6E5] text-white rounded-2xl hover:bg-[#3276A6E5]/80 transition-colors"
             >
               {isEditing ? 'Save' : 'Edit'}
             </button>
