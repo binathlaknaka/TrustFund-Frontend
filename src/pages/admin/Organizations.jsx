@@ -39,68 +39,90 @@ const OrganizationsPage = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto text-black">
       <Helmet><title>Admin | Organizations</title></Helmet>
 
       {/* New Organizations */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4 text-black">NEW ORGANIZATIONS</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full bg-gray-300 rounded-lg">
-            <thead>
-              <tr className="bg-gray-400 text-left text-sm sm:text-base text-black">
-                <th className="p-3 sm:p-4">ORG ID</th>
-                <th className="p-3 sm:p-4">ORG NAME</th>
-                <th className="p-3 sm:p-4">LEGAL DOC</th>
-                <th className="p-3 sm:p-4">ACTION</th>
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-[#3276A6]">🆕 New Organizations</h2>
+        <div className="rounded-lg shadow bg-white overflow-x-auto">
+          <table className="w-full text-sm sm:text-base">
+            <thead className="bg-[#3276A6] text-white">
+              <tr>
+                <th className="p-4 text-left">Org ID</th>
+                <th className="p-4 text-left">Org Name</th>
+                <th className="p-4 text-left">Legal Doc</th>
+                <th className="p-4 text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              {pendingUsers.length > 0 ? pendingUsers.map((user) => (
-                <tr key={user._id} className="text-sm sm:text-base text-black">
-                  <td className="p-3 sm:p-4">{user._id}</td>
-                  <td className="p-3 sm:p-4">{user.fullName}</td>
-                  <td className="p-3 sm:p-4">
-<a
-  href={`http://localhost:5000/uploads/${user.nicDocument}`}
-  download
-  className="text-blue-600 hover:underline"
->
-  Download
-</a>
-                  </td>
-                  <td className="p-3 sm:p-4 flex gap-2">
-                    <button onClick={() => approveUser(user._id)} className="text-green-600 hover:text-green-800">✔️</button>
-                    <button onClick={() => rejectUser(user._id)} className="text-red-600 hover:text-red-800">❌</button>
-                  </td>
+              {pendingUsers.length > 0 ? (
+                pendingUsers.map((user) => (
+                  <tr key={user._id} className="even:bg-gray-100">
+                    <td className="p-4 break-words">{user._id}</td>
+                    <td className="p-4">{user.fullName}</td>
+                    <td className="p-4">
+                      <a
+                        href={`http://localhost:5000/uploads/${user.nicDocument}`}
+                        download
+                        className="text-blue-600 hover:underline font-medium"
+                      >
+                        Download
+                      </a>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => approveUser(user._id)}
+                          className="bg-green-500 hover:bg-green-600 text-white rounded px-3 py-1 text-sm"
+                          title="Approve"
+                        >
+                          ✔️ Approve
+                        </button>
+                        <button
+                          onClick={() => rejectUser(user._id)}
+                          className="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm"
+                          title="Reject"
+                        >
+                          ❌ Reject
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="text-center p-6 text-gray-500">No new organizations.</td>
                 </tr>
-              )) : (
-                <tr><td colSpan="4" className="text-center p-4 text-black">No new organizations.</td></tr>
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Approved Organizations */}
+      {/* All Organizations */}
       <div>
-        <h2 className="text-xl font-bold mb-4 text-black">ALL ORGANIZATIONS</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full bg-gray-300 rounded-lg">
-            <thead>
-              <tr className="bg-gray-400 text-left text-sm sm:text-base text-black">
-                <th className="p-3 sm:p-4">ORG ID</th>
-                <th className="p-3 sm:p-4">ORG NAME</th>
+        <h2 className="text-2xl font-bold mb-6 text-[#3276A6]">✅ Approved Organizations</h2>
+        <div className="rounded-lg shadow bg-white overflow-x-auto">
+          <table className="w-full text-sm sm:text-base">
+            <thead className="bg-[#3276A6] text-white">
+              <tr>
+                <th className="p-4 text-left">Org ID</th>
+                <th className="p-4 text-left">Org Name</th>
               </tr>
             </thead>
             <tbody>
-              {approvedUsers.length > 0 ? approvedUsers.map((user) => (
-                <tr key={user._id} className="text-sm sm:text-base text-black">
-                  <td className="p-3 sm:p-4">{user._id}</td>
-                  <td className="p-3 sm:p-4">{user.fullName || user.email}</td>
+              {approvedUsers.length > 0 ? (
+                approvedUsers.map((user) => (
+                  <tr key={user._id} className="even:bg-gray-100">
+                    <td className="p-4 break-words">{user._id}</td>
+                    <td className="p-4">{user.fullName || user.email}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2" className="text-center p-6 text-gray-500">No organizations found.</td>
                 </tr>
-              )) : (
-                <tr><td colSpan="2" className="text-center p-4 text-black">No organizations found.</td></tr>
               )}
             </tbody>
           </table>

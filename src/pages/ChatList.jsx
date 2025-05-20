@@ -29,9 +29,11 @@ const ChatList = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Helmet>
-        <title>Donor | Chat List</title>
-      </Helmet>
+      <div className="flex justify-center items-center my-6 mb-16">
+  <h1 className="text-3xl font-bold text-black text-center">
+    Chat Room 
+  </h1>
+</div>
 
       <div className="max-w-md mx-auto">
         {chats.map((chat) => {

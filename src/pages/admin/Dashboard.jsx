@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import AdminDashboardImage from '../../assets/admin-dashboard.png';
+import AdminImage from '../../assets/dashboard.jpg'; // adjust to your image path
+import CountUp from 'react-countup';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -13,59 +14,66 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/stats");
+        const res = await fetch('http://localhost:5000/api/users/stats');
         const data = await res.json();
         setStats(data);
       } catch (err) {
-        console.error("Error fetching stats:", err);
+        console.error('Error fetching stats:', err);
       }
     };
-
     fetchStats();
   }, []);
 
   return (
-    <div className="container mx-auto px-4 text-black flex justify-center items-center min-h-[calc(100vh-8rem)]">
+    <div className="min-h-screen flex justify-center items-center bg-white text-black px-4">
       <Helmet>
         <title>Admin | Dashboard</title>
       </Helmet>
 
-      <div className="flex flex-col md:flex-row gap-10 w-full max-w-6xl mx-auto">
-        {/* Left Section: Stats */}
-        <div className="w-full md:w-2/3 space-y-6">
-          <div className="bg-[#D9D9D9] rounded-md p-6 flex justify-between items-center">
-            <h3 className="text-lg font-medium">New Users</h3>
-            <p className="text-xl font-bold">{stats.newUsers}</p>
-          </div>
+      <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl w-full gap-2 p-6  bg-white">
+        {/* Left: Image */}
+        <div className="w-full md:w-1/2 flex justify-center">
+          {/* <img
+            src={AdminImage}
+            alt="Admin Dashboard"
+            className="max-w-sm w-full"
+          /> */}
+                    <h1 className="text-6xl font-bold text-center text-[#3276A6]">ADMIN<br/>Dashboard</h1>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-[#D9D9D9] rounded-md p-6">
-              <h3 className="text-lg font-medium text-center mb-3">Total Organizations</h3>
-              <p className="text-5xl font-bold text-center text-blue-500">{stats.totalOrganizations}</p>
-            </div>
-
-            <div className="bg-[#D9D9D9] rounded-md p-6">
-              <h3 className="text-lg font-medium text-center mb-3">Total Users</h3>
-              <p className="text-5xl font-bold text-center text-blue-500">{stats.totalUsers}</p>
-            </div>
-          </div>
-
-          <div className="bg-[#D9D9D9] rounded-md p-6">
-            <h3 className="text-lg font-medium text-center mb-3">Total Donations</h3>
-            <p className="text-4xl font-bold text-center">
-              <span className="text-black">$ </span>
-              <span className="text-blue-500">{stats.totalDonations.toLocaleString()}</span>
-            </p>
-          </div>
         </div>
 
-        {/* Right Section: Image */}
-        <div className="w-full md:w-1/3 flex items-center justify-center">
-          <img
-            src={AdminDashboardImage}
-            alt="Admin dashboard illustration"
-            className="w-full max-w-md h-auto"
-          />
+        {/* Right: Stats */}
+        <div className="w-full md:w-1/2 space-y-6">
+
+          <div className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white p-6 rounded-xl shadow-lg flex justify-between items-center">
+            <h3 className="text-xl font-semibold">New Users</h3>
+            <p className="text-3xl font-bold">
+              <CountUp end={stats.newUsers} duration={2} />
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-white border-l-4 border-blue-500 p-4 rounded-lg shadow text-center hover:shadow-md transition">
+              <h3 className="text-gray-600 font-medium mb-2">Total Organizations</h3>
+              <p className="text-blue-600 text-4xl font-bold">
+                <CountUp end={stats.totalOrganizations} duration={2} />
+              </p>
+            </div>
+
+            <div className="bg-white border-l-4 border-green-500 p-4 rounded-lg shadow text-center hover:shadow-md transition">
+              <h3 className="text-gray-600 font-medium mb-2">Total Users</h3>
+              <p className="text-green-600 text-4xl font-bold">
+                <CountUp end={stats.totalUsers} duration={2} />
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-6 rounded-xl shadow-lg text-center">
+            <h3 className="text-xl font-semibold mb-2">Total Donations</h3>
+            <p className="text-4xl font-extrabold">
+              $ <CountUp end={stats.totalDonations} duration={2} separator="," />
+            </p>
+          </div>
         </div>
       </div>
     </div>

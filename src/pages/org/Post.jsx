@@ -23,9 +23,13 @@ const PostsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Helmet>
-        <title>Organization | Posts</title>
-      </Helmet>
+      
+{/* 
+       <div className="flex justify-center items-center my-6 mb-16">
+  <h1 className="text-3xl font-bold text-black text-center">
+    Organization | Posts
+  </h1>
+</div> */}
 
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Posted</h1>

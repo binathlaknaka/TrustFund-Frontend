@@ -84,14 +84,13 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 flex justify-center relative">
-      <Helmet><title>Chat</title></Helmet>
+    <div className="container mx-auto px-4 py-8 flex justify-center relative h-full">
 
       <button onClick={handleBackClick} className="absolute left-4 top-12 text-gray-600 hover:text-gray-800">
         ← Back
       </button>
 
-      <div className="w-full max-w-lg border rounded-lg shadow">
+      <div className="w-full h-full max-w-lg border rounded-lg shadow">
         <div className="bg-[#3276A6] text-white rounded-t-lg p-4">
           <h1 className="text-xl font-bold text-center">{chatUser?.fullName || 'Chat'}</h1>
         </div>

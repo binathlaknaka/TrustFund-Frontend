@@ -85,7 +85,6 @@ const OrganizationChatPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 flex justify-center relative">
-      <Helmet><title>Chat</title></Helmet>
 
       <button onClick={handleBackClick} className="absolute left-4 top-12 text-gray-600 hover:text-gray-800">
         ← Back

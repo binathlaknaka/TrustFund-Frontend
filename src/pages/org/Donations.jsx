@@ -28,9 +28,12 @@ const DonationReceivePage = () => {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
-      <Helmet>
-        <title>Organizations | Donations</title>
-      </Helmet>
+      
+       <div className="flex justify-center items-center my-6 mb-16">
+  <h1 className="text-3xl font-bold text-black text-center">
+    Organizations | Donations
+  </h1>
+</div>
 
       <h2 className="text-xl font-bold mb-4 text-black">DONATION RECEIVE</h2>
 

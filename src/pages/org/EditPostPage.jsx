@@ -44,12 +44,11 @@ const EditPostPage = () => {
     setFormData(prev => ({ ...prev, image: file }));
     const reader = new FileReader();
     reader.onloadend = () => setPreviewUrl(reader.result);
-    reader.readAsDataURL(file);
+    if (file) reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const data = new FormData();
     data.append('programName', formData.programName);
     data.append('goal', formData.goal);
@@ -75,52 +74,84 @@ const EditPostPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 text-black">
       <Helmet>
         <title>Edit Post | TrustFund Community</title>
       </Helmet>
 
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-gray-200 p-6 rounded-lg">
+      <div className="flex justify-center items-center my-6 mb-16">
+        <h1 className="text-3xl font-bold text-black text-center">
+          Edit Post | TrustFund Community
+        </h1>
+      </div>
+
+      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-gray-100 p-6 rounded-lg shadow">
         <div className="flex flex-col md:flex-row gap-8">
+          {/* Image preview & upload */}
           <div className="md:w-1/3">
-            <div className="bg-white p-4 aspect-square flex items-center justify-center mb-4">
+            <div className="bg-white p-4 aspect-square flex items-center justify-center mb-4 border border-gray-300 rounded">
               {previewUrl ? (
                 <img src={previewUrl} alt="Preview" className="max-w-full max-h-full object-contain" />
               ) : (
                 <span className="text-gray-400">No Image</span>
               )}
             </div>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full" />
+
+            <label className="block text-black font-medium mb-1">Upload Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full text-black file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-black hover:file:bg-gray-300"
+            />
           </div>
 
+          {/* Form Fields */}
           <div className="md:w-2/3 space-y-4">
-            <input
-              type="text"
-              name="programName"
-              placeholder="Program Name"
-              value={formData.programName}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="goal"
-              placeholder="Goal"
-              value={formData.goal}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-            <textarea
-              name="programDescription"
-              placeholder="Description"
-              value={formData.programDescription}
-              onChange={handleChange}
-              className="w-full p-2 border rounded h-32"
-              required
-            />
-            <button type="submit" className="bg-[#3276A6] text-white py-2 px-4 rounded">Update Post</button>
+            <div>
+              <label className="block mb-1 font-medium">Program Name</label>
+              <input
+                type="text"
+                name="programName"
+                placeholder="Program Name"
+                value={formData.programName}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded text-black"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1 font-medium">Goal (Rs.)</label>
+              <input
+                type="number"
+                name="goal"
+                placeholder="Enter fundraising goal"
+                value={formData.goal}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded text-black"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1 font-medium">Program Description</label>
+              <textarea
+                name="programDescription"
+                placeholder="Describe the program"
+                value={formData.programDescription}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded h-32 text-black"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="bg-[#3276A6] hover:bg-[#3276A6]/90 text-white py-2 px-4 rounded transition"
+            >
+              Update Post
+            </button>
           </div>
         </div>
       </form>
