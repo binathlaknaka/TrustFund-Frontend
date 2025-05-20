@@ -100,7 +100,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.path}
-                className={`transition-colors hover:text-gray-200 ${
+                className={`transition-colors text-lg  hover:text-gray-200 ${
                   isActive ? 'font-bold text-white' : 'text-black'
                 }`}
               >
@@ -110,18 +110,22 @@ const Navbar = () => {
           })}
         </div>
 
-        <div className="hidden md:block relative">
+        <div className="hidden md:block relative ">
           {currentUser ? (
             <div>
-              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="text-white font-medium">
-                {currentUser.name}
-              </button>
+              <button 
+  onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
+  className="text-white font-medium cursor-pointer"
+>
+  {currentUser.name}
+</button>
+
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-black rounded shadow-md z-50">
-                  <button onClick={handleProfileClick} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-200">
+                <div style={{ color: '#3276A6E5' }} className="absolute right-0 w-28 font-bold bg-gray-300 rounded-md shadow-lg z-50">
+                  <button onClick={handleProfileClick} className="block w-full text-center shadow-lg px-4 py-2 text-sm hover:bg-gray-200 rounded cursor-pointer">
                     Profile
                   </button>
-                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-200">
+                  <button onClick={handleLogout} className="block w-full text-center shadow-lg px-4 py-2 text-sm hover:bg-gray-200 rounded cursor-pointer">
                     Logout
                   </button>
                 </div>
